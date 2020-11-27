@@ -164,6 +164,7 @@
     <PackageReference Include="RavenDB.Client" Version="5.1.0" />
     <PackageReference Include="RavenDB.TestDriver" Version="5.1.0" />
     <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.Sinks.NUnit" Version="1.0.3" />
   </ItemGroup>
 
 </Project>
