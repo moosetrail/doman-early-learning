@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Moosetrail.EarlyLearning.Tests.TestHelpers.TestFactory;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 

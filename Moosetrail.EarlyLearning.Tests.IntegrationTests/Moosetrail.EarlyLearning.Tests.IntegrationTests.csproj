@@ -14,4 +14,8 @@
     <PackageReference Include="RavenDB.Client" Version="5.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Moosetrail.EarlyLearning.Tests.TestHelpers\Moosetrail.EarlyLearning.Tests.TestHelpers.csproj" />
+  </ItemGroup>
+
 </Project>
