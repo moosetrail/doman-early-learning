@@ -10,16 +10,16 @@ using Serilog;
 
 namespace EarlyLearning.API.Controllers.People
 {
+    [Authorize]
     [Route("api/children")]
     [ApiController]
     public class ChildController : ApiControllerBase
     {
-        public ChildController(IAsyncDocumentSession session, ILogger logger)
-        : base(logger.ForContext<ChildController>(), session)
+        public ChildController(AppUser currentUser, IAsyncDocumentSession session, ILogger logger)
+        : base(logger.ForContext<ChildController>(), session, currentUser)
         {
         }
 
-        [Authorize]
         [HttpPost]
         [Route("")]
         public async Task<ChildVM> AddChild(ChildVM child)
@@ -33,10 +33,10 @@ namespace EarlyLearning.API.Controllers.People
             await Session.StoreAsync(childToAdd);
             Logger.ForContext("Child", child).Information("Stored to session");
 
-            if (AppUser is AdultProgrammer adult)
+            if (CurrentUser is AdultProgrammer adult)
             {
                 adult.AddChild(childToAdd.Id);
-                Logger.ForContext("ChildId", child.Id).ForContext("AdultProgrammer", AppUser.Email).Information("Added child to adult");
+                Logger.ForContext("ChildId", child.Id).ForContext("AdultProgrammer", CurrentUser.Email).Information("Added child to adult");
             }
 
             await Session.SaveChangesAsync();
@@ -55,9 +55,11 @@ namespace EarlyLearning.API.Controllers.People
             };
         }
 
+        [HttpGet]
+        [Route("")]
         public async Task<IEnumerable<ChildVM>> GetChildren()
         {
-            var user = await Session.Query<AppUser>().SingleOrDefaultAsync(x => x.Email == AppUserEmail);
+            var user = await Session.Query<AdultProgrammer>().SingleOrDefaultAsync(x => x.Email == AppUserEmail);
 
             return null;
         }

@@ -13,15 +13,17 @@ namespace EarlyLearning.API.Controllers
     {
         protected readonly ILogger Logger;
         protected readonly IAsyncDocumentSession Session;
+        private readonly AppUser _currentUser;
 
-        protected ApiControllerBase(ILogger logger, IAsyncDocumentSession session = null)
+        protected ApiControllerBase(ILogger logger, IAsyncDocumentSession session = null, AppUser currentUser = null)
         {
             Logger = logger.ForContext<ApiControllerBase>()
                 .ForContext("User", User != null ? User.Identity?.Name : "Not Authenticated");
             Session = session;
+            _currentUser = currentUser;
         }
 
-        protected AppUser AppUser
+        protected AppUser CurrentUser
         {
             get
             {
@@ -32,6 +34,6 @@ namespace EarlyLearning.API.Controllers
             }
         }
 
-        protected string AppUserEmail => User?.Identity?.Name;
+        protected string AppUserEmail => _currentUser.Email;
     }
 }
