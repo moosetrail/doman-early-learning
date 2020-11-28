@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\EarlyLearning.API\EarlyLearning.API.csproj" />
     <ProjectReference Include="..\EarlyLearning.Tests.TestHelpers\EarlyLearning.Tests.TestHelpers.csproj" />
   </ItemGroup>
 
