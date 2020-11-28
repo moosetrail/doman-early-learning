@@ -2,7 +2,7 @@
 using System.Linq;
 using EarlyLearning.Core.People;
 
-namespace EarlyLearning.Dataclasses.People
+namespace EarlyLearning.People.DataModels
 {
     public class AdultProgrammer: AppUser
     {

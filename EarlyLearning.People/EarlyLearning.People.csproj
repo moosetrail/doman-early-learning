@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DataModels\" />
+    <ProjectReference Include="..\src\EarlyLearning.Core\EarlyLearning.Core.csproj" />
   </ItemGroup>
 
 </Project>

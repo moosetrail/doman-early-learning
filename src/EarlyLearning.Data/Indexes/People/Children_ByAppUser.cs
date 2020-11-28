@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using EarlyLearning.Core.People;
-using EarlyLearning.Dataclasses.People;
+using EarlyLearning.People.DataModels;
 using Raven.Client.Documents.Indexes;
 
 namespace EarlyLearning.Data.Indexes.People

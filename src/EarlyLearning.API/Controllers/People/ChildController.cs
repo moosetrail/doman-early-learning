@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using EarlyLearning.API.Models.People;
 using EarlyLearning.Core.People;
-using EarlyLearning.Dataclasses.People;
+using EarlyLearning.People.DataModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Raven.Client.Documents;
