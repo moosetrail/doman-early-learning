@@ -24,23 +24,23 @@ namespace EarlyLearning.API.Controllers.People
         [Route("")]
         public async Task<ChildVM> AddChild(ChildVM child)
         {
-            var nbrChildrenWithSameName = await _session.Query<Child>()
+            var nbrChildrenWithSameName = await Session.Query<Child>()
                 .CountAsync(x => x.FirstName == child.FirstName && x.LastName == child.LastName);
 
             var childToAdd = new Child(child.FirstName, child.LastName);
             childToAdd.SetIdWithNumber(nbrChildrenWithSameName + 1);
 
-            await _session.StoreAsync(childToAdd);
-            _logger.ForContext("Child", child).Information("Stored to session");
+            await Session.StoreAsync(childToAdd);
+            Logger.ForContext("Child", child).Information("Stored to session");
 
             if (AppUser is AdultProgrammer adult)
             {
                 adult.AddChild(childToAdd.Id);
-                _logger.ForContext("ChildId", child.Id).ForContext("AdultProgrammer", AppUser.Email).Information("Added child to adult");
+                Logger.ForContext("ChildId", child.Id).ForContext("AdultProgrammer", AppUser.Email).Information("Added child to adult");
             }
 
-            await _session.SaveChangesAsync();
-            _logger.Information("Session saved");
+            await Session.SaveChangesAsync();
+            Logger.Information("Session saved");
 
             return ChildToVM(childToAdd);
         }
@@ -57,7 +57,7 @@ namespace EarlyLearning.API.Controllers.People
 
         public async Task<IEnumerable<ChildVM>> GetChildren()
         {
-            var user = await _session.Query<AppUser>().SingleOrDefaultAsync(x => x.Email == AppUserEmail);
+            var user = await Session.Query<AppUser>().SingleOrDefaultAsync(x => x.Email == AppUserEmail);
 
             return null;
         }
