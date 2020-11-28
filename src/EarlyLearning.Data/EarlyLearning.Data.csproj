@@ -14,4 +14,8 @@
     <ProjectReference Include="..\EarlyLearning.Dataclasses\EarlyLearning.Dataclasses.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Indexes\People\" />
+  </ItemGroup>
+
 </Project>

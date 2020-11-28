@@ -4,7 +4,7 @@ using EarlyLearning.Core.People;
 using EarlyLearning.People.DataModels;
 using Raven.Client.Documents.Indexes;
 
-namespace EarlyLearning.Data.Indexes.People
+namespace EarlyLearning.People.RavenDbIndexes
 {
     public class Children_ByAppUser : AbstractMultiMapIndexCreationTask<Children_ByAppUser.Result>
     {
