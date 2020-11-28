@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5F009B15
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EarlyLearning.API", "src\EarlyLearning.API\EarlyLearning.API.csproj", "{BA22934A-4A9D-4CA2-9F53-D2AFF7086E0F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EarlyLearning.Dataclasses", "src\EarlyLearning.Dataclasses\EarlyLearning.Dataclasses.csproj", "{B5FAB740-1025-428A-98FE-646108B1B2E3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EarlyLearning.Tests.IntegrationTests", "tests\EarlyLearning.Tests.IntegrationTests\EarlyLearning.Tests.IntegrationTests.csproj", "{2ED6DACB-4582-4D3B-80A7-0F5D8F708CCC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EarlyLearning.Tests.TestHelpers", "tests\EarlyLearning.Tests.TestHelpers\EarlyLearning.Tests.TestHelpers.csproj", "{F21F6008-1283-436C-A45F-CC85657CF013}"
@@ -31,10 +29,6 @@ Global
 		{BA22934A-4A9D-4CA2-9F53-D2AFF7086E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA22934A-4A9D-4CA2-9F53-D2AFF7086E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA22934A-4A9D-4CA2-9F53-D2AFF7086E0F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B5FAB740-1025-428A-98FE-646108B1B2E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5FAB740-1025-428A-98FE-646108B1B2E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B5FAB740-1025-428A-98FE-646108B1B2E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B5FAB740-1025-428A-98FE-646108B1B2E3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2ED6DACB-4582-4D3B-80A7-0F5D8F708CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2ED6DACB-4582-4D3B-80A7-0F5D8F708CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2ED6DACB-4582-4D3B-80A7-0F5D8F708CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
