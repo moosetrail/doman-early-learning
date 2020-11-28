@@ -1,10 +1,7 @@
 ﻿using System.Net.Http;
-using System.Text;
 using EarlyLearning.API;
 using EarlyLearning.Tests.TestHelpers.TestFactory;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 
 namespace EarlyLearning.Tests.IntegrationTests.API
@@ -31,23 +28,6 @@ namespace EarlyLearning.Tests.IntegrationTests.API
         protected void Teardown()
         {
             SUT.Dispose();
-        }
-
-        protected StringContent ToJson(object obj)
-        {
-            var json = JsonConvert.SerializeObject(obj, Formatting.Indented, new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                DateTimeZoneHandling = DateTimeZoneHandling.Unspecified
-            });
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            return content;
-        }
-
-        protected string ToJsonString(object obj)
-        {
-            var json = ToJson(obj);
-            return json.ReadAsStringAsync().Result;
         }
     }
 }
