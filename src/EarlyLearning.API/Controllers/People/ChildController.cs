@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using EarlyLearning.API.Models.People;
+using EarlyLearning.Core.People;
 using EarlyLearning.Dataclasses.People;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

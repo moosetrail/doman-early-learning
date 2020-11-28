@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5F009B15
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EarlyLearning.API", "src\EarlyLearning.API\EarlyLearning.API.csproj", "{BA22934A-4A9D-4CA2-9F53-D2AFF7086E0F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EarlyLearning.Business", "src\EarlyLearning.Business\EarlyLearning.Business.csproj", "{2BCEBF91-22E1-4747-A7FC-911975699EE3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EarlyLearning.Data", "src\EarlyLearning.Data\EarlyLearning.Data.csproj", "{36BAB66D-97CC-493A-A536-F8B2E7D2CAB7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EarlyLearning.Dataclasses", "src\EarlyLearning.Dataclasses\EarlyLearning.Dataclasses.csproj", "{B5FAB740-1025-428A-98FE-646108B1B2E3}"
@@ -21,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EarlyLearning.Tests.UnitTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EarlyLearning.API.DependencyInjection", "src\EarlyLearning.API.DependencyInjection\EarlyLearning.API.DependencyInjection.csproj", "{C520A6E9-7EF9-4E21-86D3-167DB8586FAE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EarlyLearning.Core", "src\EarlyLearning.Core\EarlyLearning.Core.csproj", "{DB7CAB51-989F-49C3-A9B8-D6F82592D534}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,10 +31,6 @@ Global
 		{BA22934A-4A9D-4CA2-9F53-D2AFF7086E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA22934A-4A9D-4CA2-9F53-D2AFF7086E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA22934A-4A9D-4CA2-9F53-D2AFF7086E0F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2BCEBF91-22E1-4747-A7FC-911975699EE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2BCEBF91-22E1-4747-A7FC-911975699EE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2BCEBF91-22E1-4747-A7FC-911975699EE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2BCEBF91-22E1-4747-A7FC-911975699EE3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{36BAB66D-97CC-493A-A536-F8B2E7D2CAB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{36BAB66D-97CC-493A-A536-F8B2E7D2CAB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36BAB66D-97CC-493A-A536-F8B2E7D2CAB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -59,6 +55,10 @@ Global
 		{C520A6E9-7EF9-4E21-86D3-167DB8586FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C520A6E9-7EF9-4E21-86D3-167DB8586FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C520A6E9-7EF9-4E21-86D3-167DB8586FAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB7CAB51-989F-49C3-A9B8-D6F82592D534}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB7CAB51-989F-49C3-A9B8-D6F82592D534}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB7CAB51-989F-49C3-A9B8-D6F82592D534}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB7CAB51-989F-49C3-A9B8-D6F82592D534}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

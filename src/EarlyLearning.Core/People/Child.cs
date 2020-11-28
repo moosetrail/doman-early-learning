@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EarlyLearning.Dataclasses.People
+namespace EarlyLearning.Core.People
 {
     public class Child : IEquatable<Child>
     {

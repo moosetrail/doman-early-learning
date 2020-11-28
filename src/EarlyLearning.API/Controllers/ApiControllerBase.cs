@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using EarlyLearning.Dataclasses.People;
+using EarlyLearning.Core.People;
 using Microsoft.AspNetCore.Mvc;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;

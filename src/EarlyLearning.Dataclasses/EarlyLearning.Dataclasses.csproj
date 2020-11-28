@@ -10,4 +10,8 @@
     <Folder Include="ReadingProgram\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EarlyLearning.Core\EarlyLearning.Core.csproj" />
+  </ItemGroup>
+
 </Project>

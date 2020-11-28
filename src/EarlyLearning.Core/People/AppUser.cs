@@ -1,4 +1,4 @@
-﻿namespace EarlyLearning.Dataclasses.People
+﻿namespace EarlyLearning.Core.People
 {
     public interface AppUser
     {

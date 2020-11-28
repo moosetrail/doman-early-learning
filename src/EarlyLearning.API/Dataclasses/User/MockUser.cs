@@ -1,4 +1,4 @@
-﻿using EarlyLearning.Dataclasses.People;
+﻿using EarlyLearning.Core.People;
 
 namespace EarlyLearning.API.Dataclasses.User
 {
