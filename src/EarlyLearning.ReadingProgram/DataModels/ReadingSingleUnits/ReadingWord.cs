@@ -2,6 +2,6 @@
 {
     public class ReadingWord : ReadingSingleUnit
     {
-        
+        public DictionaryWord DictionaryWord { get; private set; }
     }
 }

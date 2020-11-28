@@ -6,6 +6,11 @@
 
   <ItemGroup>
     <Folder Include="DataModels\HomemadeBooks\" />
+    <Folder Include="DTOForRavenDb\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EarlyLearning.Core\EarlyLearning.Core.csproj" />
   </ItemGroup>
 
 </Project>
