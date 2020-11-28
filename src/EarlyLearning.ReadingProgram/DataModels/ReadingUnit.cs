@@ -2,6 +2,6 @@
 {
     public interface ReadingUnit
     {
-        
+        public string Title { get; }
     }
 }
