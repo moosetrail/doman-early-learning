@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EarlyLearning.API.Dependenc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EarlyLearning.Core", "src\EarlyLearning.Core\EarlyLearning.Core.csproj", "{DB7CAB51-989F-49C3-A9B8-D6F82592D534}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EarlyLearning.People", "EarlyLearning.People\EarlyLearning.People.csproj", "{0B63855C-7DDE-4FD6-9480-16343045C666}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EarlyLearning.People", "src\EarlyLearning.People\EarlyLearning.People.csproj", "{50A12892-4645-4850-B4AD-10FDD0205046}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +55,10 @@ Global
 		{DB7CAB51-989F-49C3-A9B8-D6F82592D534}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB7CAB51-989F-49C3-A9B8-D6F82592D534}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB7CAB51-989F-49C3-A9B8-D6F82592D534}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B63855C-7DDE-4FD6-9480-16343045C666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B63855C-7DDE-4FD6-9480-16343045C666}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B63855C-7DDE-4FD6-9480-16343045C666}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B63855C-7DDE-4FD6-9480-16343045C666}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50A12892-4645-4850-B4AD-10FDD0205046}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50A12892-4645-4850-B4AD-10FDD0205046}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50A12892-4645-4850-B4AD-10FDD0205046}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50A12892-4645-4850-B4AD-10FDD0205046}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
