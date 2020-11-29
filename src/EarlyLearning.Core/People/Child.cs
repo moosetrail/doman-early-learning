@@ -8,6 +8,12 @@ namespace EarlyLearning.Core.People
         {
             FirstName = firstName;
             LastName = lastName;
+            Id = CreateBasicId();
+        }
+
+        private string CreateBasicId()
+        {
+            return "Child/" + LastName + ", " + FirstName;
         }
 
         public string Id { get; private set; }
@@ -16,10 +22,9 @@ namespace EarlyLearning.Core.People
 
         public string LastName { get; private set; }
 
-        public string SetIdWithNumber(int nbr)
+        public void SetIdWithNumber(int nbr)
         {
-            Id = "Child/" + FirstName + " " + LastName + " - " + nbr;
-            return Id;
+            Id = CreateBasicId() + " - " + nbr;
         }
 
         public override bool Equals(object obj)

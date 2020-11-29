@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>EarlyLearning.ReadingPrograms</AssemblyName>
+    <RootNamespace>EarlyLearning.ReadingPrograms</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

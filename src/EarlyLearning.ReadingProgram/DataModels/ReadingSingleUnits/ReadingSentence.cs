@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EarlyLearning.ReadingProgram.DataModels.ReadingSingleUnits
+namespace EarlyLearning.ReadingPrograms.DataModels.ReadingSingleUnits
 {
     public class ReadingSentence : ReadingSingleUnit
     {

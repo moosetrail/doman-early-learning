@@ -1,5 +1,5 @@
 ﻿
-namespace EarlyLearning.ReadingProgram
+namespace EarlyLearning.ReadingPrograms
 {
     public interface ReadingProgram
     {

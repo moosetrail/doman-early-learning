@@ -167,4 +167,9 @@
     <PackageReference Include="Serilog.Sinks.NUnit" Version="1.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\EarlyLearning.API\EarlyLearning.API.csproj" />
+    <ProjectReference Include="..\..\src\EarlyLearning.ReadingProgram\EarlyLearning.ReadingProgram.csproj" />
+  </ItemGroup>
+
 </Project>

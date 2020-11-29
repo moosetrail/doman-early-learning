@@ -1,4 +1,4 @@
-﻿namespace EarlyLearning.ReadingProgram.DataModels.ReadingSingleUnits
+﻿namespace EarlyLearning.ReadingPrograms.DataModels.ReadingSingleUnits
 {
     public class ReadingWord : ReadingSingleUnit
     {

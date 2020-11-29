@@ -17,6 +17,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\EarlyLearning.API\EarlyLearning.API.csproj" />
+    <ProjectReference Include="..\..\src\EarlyLearning.Core\EarlyLearning.Core.csproj" />
+    <ProjectReference Include="..\..\src\EarlyLearning.People\EarlyLearning.People.csproj" />
+    <ProjectReference Include="..\..\src\EarlyLearning.ReadingProgram\EarlyLearning.ReadingProgram.csproj" />
     <ProjectReference Include="..\EarlyLearning.Tests.TestHelpers\EarlyLearning.Tests.TestHelpers.csproj" />
   </ItemGroup>
 

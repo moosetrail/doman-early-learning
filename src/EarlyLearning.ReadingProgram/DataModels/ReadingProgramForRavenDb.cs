@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using EarlyLearning.Core.People;
 
-namespace EarlyLearning.ReadingProgram.DataModels
+namespace EarlyLearning.ReadingPrograms.DataModels
 {
     public class ReadingProgramForRavenDb : ReadingProgram
     {

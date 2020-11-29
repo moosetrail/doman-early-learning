@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EarlyLearning.API.Controllers.ReadingProgram
+namespace EarlyLearning.API.Controllers.ReadingPrograms
 {
     public abstract class ReadingCategoryController : ControllerBase
     {

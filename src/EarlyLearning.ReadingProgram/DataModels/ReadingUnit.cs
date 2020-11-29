@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using EarlyLearning.Core.Program;
 
-namespace EarlyLearning.ReadingProgram.DataModels
+namespace EarlyLearning.ReadingPrograms.DataModels
 {
     public abstract class ReadingUnit
     {
-        public string Title { get; }
+        public string Title { get; private set; }
 
         public ActivityStatus ActivityStatus { get; private set; }
 

@@ -1,4 +1,5 @@
-﻿using Moosetrail.EarlyLearning.Tests.TestHelpers.RavenDb;
+﻿using System;
+using Moosetrail.EarlyLearning.Tests.TestHelpers.RavenDb;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Indexes;
 
@@ -6,7 +7,12 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
 {
     public partial class TestFactory
     {
-        public TestFactory() { }
+        private Random random;
+
+        public TestFactory()
+        {
+            random = new Random();
+        }
 
         public TestFactory(bool setupRavenDb)
         {
