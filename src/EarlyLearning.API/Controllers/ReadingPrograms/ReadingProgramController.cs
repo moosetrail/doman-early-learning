@@ -13,7 +13,7 @@ namespace EarlyLearning.API.Controllers.ReadingPrograms
         { }
 
         [HttpGet]
-        [Route("all")]
+        [Route("")]
         public Task<IActionResult> GetReadingProgramsForUser()
         {
             return null;

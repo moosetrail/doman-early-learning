@@ -1,6 +1,6 @@
 ﻿namespace EarlyLearning.ReadingPrograms.DataModels.ReadingSingleUnits
 {
-    public class ReadingWord : ReadingSingleUnit
+    public class ReadingWord : ReadingCard
     {
         public DictionaryWord DictionaryWord { get; private set; }
     }

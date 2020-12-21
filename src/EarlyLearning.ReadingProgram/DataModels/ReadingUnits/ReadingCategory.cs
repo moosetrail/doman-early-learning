@@ -2,8 +2,8 @@
 
 namespace EarlyLearning.ReadingPrograms.DataModels.ReadingUnits
 {
-    public abstract class ReadingCategory<T>: ReadingUnit where T: ReadingSingleUnit
+    public abstract class ReadingCategory<T>: ReadingUnit where T: ReadingCard
     {
-        public IEnumerable<T> ReadingUnits { get; private set; }
+        public IEnumerable<T> ReadingCards { get; private set; }
     }
 }

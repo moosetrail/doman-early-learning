@@ -2,6 +2,6 @@
 {
     public class HomemadeBook : ReadingUnit
     {
-        public string Title { get; }
+
     }
 }
