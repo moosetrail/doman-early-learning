@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="DataModels\HomemadeBooks\" />
-    <Folder Include="DTOForRavenDb\" />
   </ItemGroup>
 
   <ItemGroup>

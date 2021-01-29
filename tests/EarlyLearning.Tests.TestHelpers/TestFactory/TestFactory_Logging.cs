@@ -7,6 +7,7 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
         public ILogger MockLogger()
         {
             return new LoggerConfiguration()
+                .MinimumLevel.Debug()
                 .WriteTo.NUnitOutput()
                 .CreateLogger();
         }

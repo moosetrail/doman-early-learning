@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace EarlyLearning.Tests.IntegrationTests.API
 {
-    public abstract class ApiTestBase
+    public abstract class APITestBaseClass
     {
         protected static readonly TestFactory TestFactory = new TestFactory();
 

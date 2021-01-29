@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EarlyLearning.Core\EarlyLearning.Core.csproj" />
     <ProjectReference Include="..\EarlyLearning.People\EarlyLearning.People.csproj" />
+    <ProjectReference Include="..\EarlyLearning.ReadingProgram\EarlyLearning.ReadingProgram.csproj" />
   </ItemGroup>
 
 

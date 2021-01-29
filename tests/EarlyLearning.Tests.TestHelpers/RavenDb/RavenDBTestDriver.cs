@@ -1,7 +1,7 @@
 ﻿using Raven.Client.Documents;
 using Raven.TestDriver;
 
-namespace Moosetrail.EarlyLearning.Tests.TestHelpers.RavenDb
+namespace EarlyLearning.Tests.TestHelpers.RavenDb
 {
     public class RavenDBTestDriver : RavenTestDriver
     {

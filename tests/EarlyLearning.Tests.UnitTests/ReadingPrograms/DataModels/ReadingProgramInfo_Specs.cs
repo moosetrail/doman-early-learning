@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using EarlyLearning.Core.People;
+﻿using System.Linq;
 using EarlyLearning.ReadingPrograms.DataModels;
 using EarlyLearning.Tests.TestHelpers.TestFactory;
 using NUnit.Framework;
@@ -16,7 +14,7 @@ namespace EarlyLearning.Tests.UnitTests.ReadingPrograms.DataModels
         [SetUp]
         public void Setup()
         {
-            SUT = new ReadingProgramInfo(new List<Child>());
+            SUT = new ReadingProgramInfo();
         }
 
         [TearDown]
@@ -28,16 +26,27 @@ namespace EarlyLearning.Tests.UnitTests.ReadingPrograms.DataModels
         #region Constructor
 
         [Test]
-        public void Constructor_should_set_childIds()
+        public void Constructor_should_set_id_when_provided()
         {
-            // Given
-            var children = _testFactory.NewChildList();
-
             // When
-            SUT = new ReadingProgramInfo(children);
+            SUT = new ReadingProgramInfo("My id");
 
             // Then 
-            CollectionAssert.AreEqual(children.Select(x => x.Id), SUT.ChildrenIds);
+            Assert.AreEqual("My id", SUT.Id);
+        }
+
+        [Test]
+        public void Constructor_should_set_children()
+        {
+            // Given
+            var children = _testFactory.NewChildList().ToArray();
+
+            // When
+            SUT = new ReadingProgramInfo(forChildren: children);
+
+            // Then 
+            CollectionAssert.AreEqual(children, SUT.Children);
+            Assert.IsNull(SUT.Id);
         }
 
         #endregion

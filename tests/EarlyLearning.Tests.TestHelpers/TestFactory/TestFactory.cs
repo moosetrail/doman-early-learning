@@ -1,5 +1,5 @@
 ﻿using System;
-using Moosetrail.EarlyLearning.Tests.TestHelpers.RavenDb;
+using EarlyLearning.Tests.TestHelpers.RavenDb;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Indexes;
 

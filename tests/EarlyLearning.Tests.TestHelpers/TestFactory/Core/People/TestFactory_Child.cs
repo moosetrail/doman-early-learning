@@ -16,12 +16,24 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
         public IEnumerable<Child> NewChildList(int nbrOfChildren = 5)
         {
             var list = new List<Child>();
+            
             for (var i = 0; i < nbrOfChildren; i++)
             {
-                list.Add(NewChild());
+                list.Add(NewChild("Child " + random.Next()));
             }
 
             return list;
+        }
+
+        public Child AddNewChild(string firstName = null, string lastName = null)
+        {
+            var child = NewChild(firstName, lastName);
+
+            using var session = DocumentStore.OpenSession();
+            session.Store(child);
+            session.SaveChanges();
+
+            return child;
         }
     }
 }
