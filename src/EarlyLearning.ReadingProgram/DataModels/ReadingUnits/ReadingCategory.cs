@@ -2,8 +2,17 @@
 
 namespace EarlyLearning.ReadingPrograms.DataModels.ReadingUnits
 {
-    public abstract class ReadingCategory<T>: ReadingUnit where T: ReadingCard
+    public class ReadingCategory<T>: ReadingUnit where T: ReadingCard
     {
+        protected ReadingCategory()
+        { }
+
+        public ReadingCategory(string title, IEnumerable<T> cards)
+        :base(title)
+        {
+            ReadingCards = cards;
+        }
+
         public IEnumerable<T> ReadingCards { get; private set; }
     }
 }

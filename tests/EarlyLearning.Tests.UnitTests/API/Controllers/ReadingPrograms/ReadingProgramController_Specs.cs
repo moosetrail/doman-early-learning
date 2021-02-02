@@ -26,7 +26,7 @@ namespace EarlyLearning.Tests.UnitTests.API.Controllers.ReadingPrograms
             _programManager = new Mock<ReadingProgramManager>();
             _user = new Mock<CurrentUser>();
             _user.Setup(x => x.UserId).Returns(userId);
-            SUT = new ReadingProgramController(_testFactory.MockLogger(), _programManager.Object, _user.Object);
+            SUT = new ReadingProgramController(_testFactory.TestLogger(), _programManager.Object, _user.Object);
         }
 
         [TearDown]
@@ -38,7 +38,7 @@ namespace EarlyLearning.Tests.UnitTests.API.Controllers.ReadingPrograms
         [Test]
         public void Should_be_ApiControllerBase()
         {
-            NUnit.Framework.Assert.IsInstanceOf<ApiControllerBase>(SUT);
+            Assert.IsInstanceOf<ApiControllerBase>(SUT);
         }
 
         [Test]

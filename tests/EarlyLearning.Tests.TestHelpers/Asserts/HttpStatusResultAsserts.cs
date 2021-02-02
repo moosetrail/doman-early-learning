@@ -12,6 +12,17 @@ namespace EarlyLearning.Tests.TestHelpers.Asserts
             return result.Value as T;
         }
 
+        public static T DataInResult<T>(IActionResult result) where T : class
+        {
+            var objectResult = result as ObjectResult;
+
+            Assert.NotNull(objectResult);
+
+            var data = objectResult.Value as T;
+
+            return data;
+        }
+
         private static T DataInMessage<T>(HttpResponseMessage message) where T : class
         {
             var json = message.Content.ReadAsStringAsync().Result;
@@ -20,7 +31,7 @@ namespace EarlyLearning.Tests.TestHelpers.Asserts
 
         public static void HttpResultIsOk(HttpResponseMessage response)
         {
-            NUnit.Framework.Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         public static void HttpResultIsOk(IActionResult result)
@@ -29,18 +40,18 @@ namespace EarlyLearning.Tests.TestHelpers.Asserts
             {
 
             } else 
-                NUnit.Framework.Assert.IsInstanceOf<OkObjectResult>(result);
+                Assert.IsInstanceOf<OkObjectResult>(result);
         }
 
         public static void HttpResultIsBadRequest(string expectedMsg, IActionResult result)
         {
-            NUnit.Framework.Assert.IsInstanceOf<BadRequestObjectResult>(result);
-            NUnit.Framework.Assert.AreEqual(expectedMsg, ((BadRequestObjectResult)result).Value);
+            Assert.IsInstanceOf<BadRequestObjectResult>(result);
+            Assert.AreEqual(expectedMsg, ((BadRequestObjectResult)result).Value);
         }
 
         public static void HttpResultIsUnauthorized(IActionResult result)
         {
-            NUnit.Framework.Assert.IsInstanceOf<UnauthorizedResult>(result);
+            Assert.IsInstanceOf<UnauthorizedResult>(result);
         }
     }
 }

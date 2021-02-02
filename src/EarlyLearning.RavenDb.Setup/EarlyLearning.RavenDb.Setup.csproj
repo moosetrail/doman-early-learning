@@ -13,4 +13,8 @@
     <ProjectReference Include="..\EarlyLearning.ReadingProgram\EarlyLearning.ReadingProgram.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Populators\" />
+  </ItemGroup>
+
 </Project>

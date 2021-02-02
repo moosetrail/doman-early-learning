@@ -8,8 +8,8 @@ namespace EarlyLearning.API.Controllers.ReadingPrograms
         protected ReadingCategoryController() {}
 
         [HttpGet]
-        [Route("{programId}/current")]
-        public async Task<IActionResult> GetCurrentUnitsForProgram()
+        [Route("current")]
+        public async Task<IActionResult> GetCurrent([FromQuery] string programId)
         {
             return null;
         }
