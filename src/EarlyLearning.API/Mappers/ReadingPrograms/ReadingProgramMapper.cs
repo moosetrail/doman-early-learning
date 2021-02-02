@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using EarlyLearning.API.Models.ReadingPrograms;
+﻿using EarlyLearning.API.Models.ReadingPrograms;
 using EarlyLearning.ReadingPrograms.DataModels;
 
 namespace EarlyLearning.API.Mappers.ReadingPrograms
@@ -11,7 +10,7 @@ namespace EarlyLearning.API.Mappers.ReadingPrograms
             return new ReadingProgramVM
             {
                 ProgramId = program.Id,
-                ChildrenIds = program.Children.Select(x => x.Id)
+                ChildrenIds = program.Children
             };
         }
     }

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using EarlyLearning.Core.DTOForRavenDb;
 using EarlyLearning.Core.People;
 
 namespace EarlyLearning.Tests.TestHelpers.TestFactory
@@ -25,15 +27,25 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
             return list;
         }
 
-        public Child AddNewChild(string firstName = null, string lastName = null)
+        public Child AddNewChild(string firstName = null, string lastName = null, params string[] adults)
         {
-            var child = NewChild(firstName, lastName);
+            var child = new ChildDTO
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Adults = adults.Where(x => !string.IsNullOrWhiteSpace(x))
+            };
 
             using var session = DocumentStore.OpenSession();
             session.Store(child);
             session.SaveChanges();
 
-            return child;
+            return MapToChild(child);
+        }
+
+        private static Child MapToChild(ChildDTO child)
+        {
+            return new Child(child.Id, child.FirstName, child.LastName);
         }
     }
 }

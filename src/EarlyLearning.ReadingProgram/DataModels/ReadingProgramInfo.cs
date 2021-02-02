@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using EarlyLearning.Core.People;
 
 namespace EarlyLearning.ReadingPrograms.DataModels
 {
@@ -7,14 +6,14 @@ namespace EarlyLearning.ReadingPrograms.DataModels
     {
         private ReadingProgramInfo(){}
 
-        public ReadingProgramInfo(string id = null, params Child[] forChildren)
+        public ReadingProgramInfo(string id = null, params string[] childIds)
         {
-            Children = forChildren;
             Id = id;
+            Children = childIds;
         }
 
         public string Id { get; private set; }
 
-        public IEnumerable<Child> Children { get; private set; }
+        public IEnumerable<string> Children { get; private set; }
     }
 }

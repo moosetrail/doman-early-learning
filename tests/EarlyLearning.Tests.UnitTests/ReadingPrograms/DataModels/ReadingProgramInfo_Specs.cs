@@ -39,10 +39,10 @@ namespace EarlyLearning.Tests.UnitTests.ReadingPrograms.DataModels
         public void Constructor_should_set_children()
         {
             // Given
-            var children = _testFactory.NewChildList().ToArray();
+            var children = _testFactory.NewChildList().Select(x => x.Id).ToArray();
 
             // When
-            SUT = new ReadingProgramInfo(forChildren: children);
+            SUT = new ReadingProgramInfo(childIds: children);
 
             // Then 
             CollectionAssert.AreEqual(children, SUT.Children);

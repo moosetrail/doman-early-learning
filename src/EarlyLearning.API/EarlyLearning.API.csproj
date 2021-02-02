@@ -17,8 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EarlyLearning.API.DependencyInjection\EarlyLearning.API.DependencyInjection.csproj" />
     <ProjectReference Include="..\EarlyLearning.Core\EarlyLearning.Core.csproj" />
     <ProjectReference Include="..\EarlyLearning.People\EarlyLearning.People.csproj" />
+    <ProjectReference Include="..\EarlyLearning.RavenDb.Setup\EarlyLearning.RavenDb.Setup.csproj" />
+    <ProjectReference Include="..\EarlyLearning.RavenDb\EarlyLearning.RavenDb.csproj" />
     <ProjectReference Include="..\EarlyLearning.ReadingProgram\EarlyLearning.ReadingProgram.csproj" />
   </ItemGroup>
 

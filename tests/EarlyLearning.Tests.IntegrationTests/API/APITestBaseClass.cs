@@ -15,7 +15,7 @@ namespace EarlyLearning.Tests.IntegrationTests.API
         protected HttpClient SUT;
 
         [SetUp]
-        protected void Setup()
+        public void Setup()
         {
             SUT = ServerFactory.WithWebHostBuilder(config =>
             {
@@ -25,7 +25,7 @@ namespace EarlyLearning.Tests.IntegrationTests.API
         }
 
         [TearDown]
-        protected void Teardown()
+        public void Teardown()
         {
             SUT.Dispose();
         }

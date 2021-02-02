@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using EarlyLearning.ReadingPrograms;
+using EarlyLearning.ReadingPrograms.RavenDb.Indexes;
 using EarlyLearning.Tests.TestHelpers.Asserts;
 using EarlyLearning.Tests.TestHelpers.TestFactory;
 using NUnit.Framework;
@@ -16,7 +17,8 @@ namespace EarlyLearning.Tests.UnitTests.ReadingPrograms
         [SetUp]
         public void Setup()
         {
-            SUT = new ReadingProgramManagerOnRavenDb();
+            _testFactory.GenerateNewDocumentStore(new ReadingProgram_ByUser());
+            SUT = new ReadingProgramManagerOnRavenDb(_testFactory.DocumentStore.OpenAsyncSession());
         }
 
         [TearDown]
@@ -41,6 +43,7 @@ namespace EarlyLearning.Tests.UnitTests.ReadingPrograms
                 _testFactory.AddNewReadingProgram(userId)
             };
             _testFactory.AddNewReadingProgram(userId + 1);
+            _testFactory.WaitOfIndexesInDocumentStore();
 
             // When
             var result = await SUT.GetAllProgramsForUser(userId);

@@ -11,6 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="RavenDB.Client" Version="5.1.0" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EarlyLearning.Core\EarlyLearning.Core.csproj" />
   </ItemGroup>
 

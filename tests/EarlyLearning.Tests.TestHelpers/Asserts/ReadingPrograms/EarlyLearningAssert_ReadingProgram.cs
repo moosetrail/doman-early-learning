@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using EarlyLearning.API.Models.ReadingPrograms;
 using EarlyLearning.ReadingPrograms.DataModels;
@@ -24,7 +23,7 @@ namespace EarlyLearning.Tests.TestHelpers.Asserts
             Assert.NotNull(actual, "Actual was null");
             Assert.AreEqual(expected.Id, actual.ProgramId, "ProgramId didn't match");
 
-            AreEqual(expected.Children.Select(x => x.Id), actual.ChildrenIds, AreEqual);
+            AreEqual(expected.Children, actual.ChildrenIds, AreEqual);
 
             return true;
         }

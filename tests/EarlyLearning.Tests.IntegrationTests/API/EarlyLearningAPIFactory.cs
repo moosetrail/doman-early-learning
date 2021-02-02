@@ -1,9 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using EarlyLearning.People.DataModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
+using Serilog;
 using TestFactory = EarlyLearning.Tests.TestHelpers.TestFactory.TestFactory;
 
 namespace EarlyLearning.Tests.IntegrationTests.API
@@ -20,24 +23,37 @@ namespace EarlyLearning.Tests.IntegrationTests.API
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
+            builder.UseEnvironment("Testing");
             builder.ConfigureServices(services =>
             {
-                RemoveConfiguredRavenDb(services);
-                AddTestRavenDb(services);
+                ChangeLoggingSetup(services);
+                ChangeRavenDbSetup(services);
+                SetupCurrentUser(services);
             });
+        }
+
+        private static void ChangeRavenDbSetup(IServiceCollection services)
+        {
+            RemoveConfiguredRavenDb(services);
+            AddTestRavenDb(services);
         }
 
         private static void RemoveConfiguredRavenDb(IServiceCollection services)
         {
-            var store = services.SingleOrDefault(
-                d => d.ServiceType ==
-                     typeof(IDocumentStore));
+            RemoveService(services, typeof(IDocumentStore));
 
-            services.Remove(store);
-
-            var session = services.SingleOrDefault(d => 
+            var session = services.SingleOrDefault(d =>
                 d.ServiceType == typeof(IAsyncDocumentSession));
             services.Remove(session);
+        }
+
+        private static void RemoveService(IServiceCollection services, Type type)
+        {
+            var service = services.SingleOrDefault(
+                d => d.ServiceType ==
+                     type);
+
+            services.Remove(service);
         }
 
         private static void AddTestRavenDb(IServiceCollection services)
@@ -47,6 +63,23 @@ namespace EarlyLearning.Tests.IntegrationTests.API
             services.Add(new ServiceDescriptor(typeof(IDocumentStore), _testFactory.DocumentStore));
             services.Add(new ServiceDescriptor(typeof(IAsyncDocumentSession),
                 _testFactory.DocumentStore.OpenAsyncSession()));
+        }
+
+        private static void ChangeLoggingSetup(IServiceCollection services)
+        {
+            var startupLogger = services.Where(x => x.ServiceType == typeof(ILogger)).ToList();
+            foreach (var serviceDescriptor in startupLogger)
+            {
+                services.Remove(serviceDescriptor);
+            }
+
+            services.AddSingleton(_testFactory.TestLogger());
+        }
+
+        private static void SetupCurrentUser(IServiceCollection services)
+        {
+            RemoveService(services, typeof(CurrentUser));
+            services.Add(new ServiceDescriptor(typeof(CurrentUser), _testFactory.CurrentUser));
         }
     }
 }

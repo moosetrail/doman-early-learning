@@ -1,16 +1,24 @@
+using System.Threading.Tasks;
+using EarlyLearning.API.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace EarlyLearning.API
 {
-    public class Startup
+    public partial class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly ILogger _logger;
+        private readonly IWebHostEnvironment _env;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
+            _logger = Log.Logger;
         }
 
         public IConfiguration Configuration { get; }
@@ -19,6 +27,8 @@ namespace EarlyLearning.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            EarlyLearningAPI.BuildDependencies(services);
+            Task.WaitAll(ConfigureRavenDb(services));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

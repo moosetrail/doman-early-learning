@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using EarlyLearning.RavenDb.Setup;
 using EarlyLearning.Tests.TestHelpers.RavenDb;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Indexes;
@@ -53,7 +55,8 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
 
         private static void AddAllIndexes(IDocumentStore store)
         {
-            // IndexCreation.CreateIndexes(typeof(School_ByNameOfSchoolWithId).Assembly, store);
+           var indexManager = new StandardRavenDbIndexManager();
+           Task.WaitAll(indexManager.AddAllIndexes(store));
         }
 
         public void WaitOfIndexesInDocumentStore()

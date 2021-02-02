@@ -11,6 +11,13 @@ namespace EarlyLearning.Core.People
             Id = CreateBasicId();
         }
 
+        public Child(string id, string firstName, string lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Id = id;
+        }
+
         private string CreateBasicId()
         {
             return "Child/" + LastName + ", " + FirstName;
@@ -21,6 +28,7 @@ namespace EarlyLearning.Core.People
         public string FirstName { get; private set; }
 
         public string LastName { get; private set; }
+
 
         public void SetIdWithNumber(int nbr)
         {
