@@ -4,7 +4,7 @@ namespace EarlyLearning.ReadingPrograms.DataModels.ReadingUnits
 {
     public class ReadingCategory<T>: ReadingUnit where T: ReadingCard
     {
-        protected ReadingCategory()
+        private ReadingCategory()
         { }
 
         public ReadingCategory(string title, IEnumerable<T> cards)

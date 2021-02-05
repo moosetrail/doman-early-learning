@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using EarlyLearning.API.Models.ReadingPrograms;
 using EarlyLearning.ReadingPrograms.DataModels.ReadingSingleUnits;
 using EarlyLearning.ReadingPrograms.DataModels.ReadingUnits;
 using Microsoft.AspNetCore.Mvc;
-using NUnit.Framework;
 
 namespace EarlyLearning.Tests.TestHelpers.Asserts
 {
@@ -11,7 +11,8 @@ namespace EarlyLearning.Tests.TestHelpers.Asserts
     {
         public static bool AreEqual(ReadingCategory<ReadingWord> expected, ReadingCategoryVM actual)
         {
-            Assert.Fail("Not implemented yet");
+            AreEqual(expected.Title, actual.Title);
+            AreEqual(expected.ReadingCards.Select(x => x.TextOnTheCard), actual.Cards, AreEqual);
             return true;
         }
 

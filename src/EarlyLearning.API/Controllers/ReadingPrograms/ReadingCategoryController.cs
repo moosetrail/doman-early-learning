@@ -1,55 +1,84 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using EarlyLearning.API.Models.ReadingPrograms;
+using EarlyLearning.ReadingPrograms;
+using EarlyLearning.ReadingPrograms.DataModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EarlyLearning.API.Controllers.ReadingPrograms
 {
-    public abstract class ReadingCategoryController : ControllerBase
+    public abstract class ReadingCategoryController<T> : ControllerBase where T : ReadingUnit
     {
-        protected ReadingCategoryController() {}
+        private readonly ReadingProgram<T> _program;
+        protected ReadingCategoryController(ReadingProgram<T> program)
+        {
+            _program = program;
+        }
 
         [HttpGet]
         [Route("current")]
         public async Task<IActionResult> GetCurrent([FromQuery] string programId)
         {
-            return null;
+            var current = await _program.GetCurrent(programId);
+
+            var vmList = MapToVm(current);
+
+            return Ok(vmList);
         }
+
+        protected abstract object MapToVm(IEnumerable<T> elements);
 
         [HttpGet]
         [Route("planned")]
-        public Task<IActionResult> GetPlanned([FromQuery] string programId, [FromQuery] int limit = 10,
+        public async Task<IActionResult> GetPlanned([FromQuery] string programId, [FromQuery] int limit = 10,
             [FromQuery] int offset = 0)
         {
-            return null;
+            var current = await _program.GetPlanned(programId, limit, offset);
+
+            var vmList = MapToVm(current);
+
+            return Ok(vmList);
         }
 
         [HttpGet]
         [Route("retired")]
-        public Task<IActionResult> GetRetired([FromQuery] string programId, [FromQuery] int limit = 10,
+        public async Task<IActionResult> GetRetired([FromQuery] string programId, [FromQuery] int limit = 10,
             [FromQuery] int offset = 0)
         {
-            return null;
+            var current = await _program.GetRetired(programId, limit, offset);
+
+            var vmList = MapToVm(current);
+
+            return Ok(vmList);
         }
 
         [HttpPost]
         [Route("")]
-        private Task<IActionResult> Add([FromBody] object unitToAdd, [FromQuery] string programId)
+        private async Task<IActionResult> Add([FromBody] ReadingCategoryToAddVM unitToAdd, [FromQuery] string programId)
         {
-            return null;
+            var toAdd = FromVmToUnitToAdd(unitToAdd);
+            await _program.Add(toAdd);
+            return Ok();
         }
+
+        protected abstract T FromVmToUnitToAdd(ReadingCategoryToAddVM toAdd);
 
         [HttpPatch]
         [Route("status")]
-        public Task<IActionResult> ChangeStatus([FromQuery] string unitId, [FromQuery] int newStatus)
+        public async Task<IActionResult> ChangeStatus([FromQuery] string unitId, [FromQuery] int newStatus)
         {
-            return null; 
+            await _program.ChangeStatus(unitId, newStatus);
+            return Ok(); 
         }
 
         [HttpPatch]
         [Route("move")]
-        public Task<IActionResult> MovePlanned([FromQuery] string unitId, [FromQuery] string programId,
+        public async Task<IActionResult> MovePlanned([FromQuery] string unitId, [FromQuery] string programId,
             [FromQuery] int toSpot)
         {
-            return null;
+            await _program.MovePlanned(unitId, programId, toSpot);
+            return Ok();
         }
     }
 }

@@ -5,7 +5,7 @@ namespace EarlyLearning.ReadingPrograms.DataModels
 {
     public abstract class ReadingUnit
     {
-        private ReadingUnit() {}
+        protected ReadingUnit() {}
 
         protected ReadingUnit(string title)
         {

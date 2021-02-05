@@ -21,7 +21,7 @@ namespace EarlyLearning.Tests.UnitTests.API.Controllers.ReadingPrograms
         public void Setup()
         {
             _readingProgram = new Mock<ReadingProgram<ReadingCategory<ReadingWord>>>();
-            SUT = new ReadingWordsCategoryController();
+            SUT = new ReadingWordsCategoryController(_readingProgram.Object);
         }
 
         [TearDown]
@@ -33,7 +33,7 @@ namespace EarlyLearning.Tests.UnitTests.API.Controllers.ReadingPrograms
         [Test]
         public void Should_be_ReadingCategoryController()
         {
-            Assert.IsInstanceOf<ReadingCategoryController>(SUT);
+            Assert.IsInstanceOf<ReadingCategoryController<ReadingCategory<ReadingWord>>>(SUT);
         }
 
         [Test]

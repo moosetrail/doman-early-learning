@@ -12,5 +12,11 @@ namespace EarlyLearning.ReadingPrograms
         Task<IEnumerable<T>> GetPlanned(string programId, int limit, int offset);
 
         Task<IEnumerable<T>> GetRetired(string programId, int limit, int offset);
+
+        Task Add(T toAdd);
+
+        Task ChangeStatus(string unitId, int newStatus);
+
+        Task MovePlanned(string unitId, string programId, int toSpot);
     }
 }
