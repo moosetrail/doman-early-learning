@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EarlyLearning.Core.Program;
 
 namespace EarlyLearning.ReadingPrograms.DataModels.ReadingUnits
 {
@@ -7,8 +8,8 @@ namespace EarlyLearning.ReadingPrograms.DataModels.ReadingUnits
         private ReadingCategory()
         { }
 
-        public ReadingCategory(string title, IEnumerable<T> cards)
-        :base(title)
+        public ReadingCategory(string title, IEnumerable<T> cards, ActivityStatus status)
+        :base(title, status)
         {
             ReadingCards = cards;
         }

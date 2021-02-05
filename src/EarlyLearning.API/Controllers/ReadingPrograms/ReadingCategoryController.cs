@@ -58,7 +58,7 @@ namespace EarlyLearning.API.Controllers.ReadingPrograms
         private async Task<IActionResult> Add([FromBody] ReadingCategoryToAddVM unitToAdd, [FromQuery] string programId)
         {
             var toAdd = FromVmToUnitToAdd(unitToAdd);
-            await _program.Add(toAdd);
+            await _program.Add(toAdd, programId);
             return Ok();
         }
 

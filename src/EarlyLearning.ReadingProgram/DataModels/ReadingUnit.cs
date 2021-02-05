@@ -7,10 +7,13 @@ namespace EarlyLearning.ReadingPrograms.DataModels
     {
         protected ReadingUnit() {}
 
-        protected ReadingUnit(string title)
+        protected ReadingUnit(string title, ActivityStatus status)
         {
             Title = title;
+            ActivityStatus = status;
         }
+
+        public string Id { get; private set; }
 
         public string Title { get; private set; }
 

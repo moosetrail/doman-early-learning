@@ -9,6 +9,20 @@ namespace EarlyLearning.Tests.TestHelpers.Asserts
 {
     public partial class EarlyLearningAssert
     {
+        public static bool AreEqual(ReadingCategory<ReadingWord> expected, ReadingCategory<ReadingWord> actual)
+        {
+            AreEqual(expected.Title, actual.Title);
+            AreEqual(expected.ReadingCards, actual.ReadingCards, AreEqual);
+            AreEqual(expected.ActivityStatus, actual.ActivityStatus);
+            return true;
+        }
+
+        public static void AreEqual(IEnumerable<ReadingCategory<ReadingWord>> expected,
+            IEnumerable<ReadingCategory<ReadingWord>> actual)
+        {
+            AreEqual(expected, actual, AreEqual);
+        }
+
         public static bool AreEqual(ReadingCategory<ReadingWord> expected, ReadingCategoryVM actual)
         {
             AreEqual(expected.Title, actual.Title);
