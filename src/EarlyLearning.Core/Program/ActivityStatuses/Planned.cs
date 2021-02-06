@@ -10,7 +10,7 @@ namespace EarlyLearning.Core.Program.ActivityStatuses
             SortingIndex = -1;
         }
 
-        public Planned(DateTime date, int sorting)
+        public Planned(DateTime date, decimal sorting)
         {
             DateAddedToPlan = date;
             SortingIndex = sorting;
@@ -18,6 +18,6 @@ namespace EarlyLearning.Core.Program.ActivityStatuses
 
         public DateTime DateAddedToPlan { get; private set; }
 
-        public int SortingIndex { get; private set; }
+        public decimal SortingIndex { get; private set; }
     }
 }

@@ -8,6 +8,6 @@ namespace EarlyLearning.Core.RavenDb.DataTransferObjects
 
         public ActivityStatusType Type { get; set; }
 
-        public int SortingIndex { get; set; }
+        public decimal SortingIndex { get; set; }
     }
 }

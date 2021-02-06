@@ -34,9 +34,10 @@ namespace EarlyLearning.ReadingPrograms.RavenDb.ObjectMappers
 
         public static ReadingCategory<ReadingWord> ToCategory(this ReadingCategoryDTO<ReadingWordDTO> dto)
         {
-            var category = new ReadingCategory<ReadingWord>(dto.Title, 
+            var category = new ReadingCategory<ReadingWord>(dto.Id, dto.Title, 
                 dto.Cards.Select(x => x.ToReadingWord()), 
-                dto.ActivityStatus.ToStatus());
+                dto.ActivityStatus.ToStatus(),
+                dto.Sessions);
             return category;
         }
 

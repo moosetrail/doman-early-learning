@@ -5,12 +5,18 @@ namespace EarlyLearning.ReadingPrograms.DataModels
 {
     public abstract class ReadingUnit
     {
-        protected ReadingUnit() {}
-
         protected ReadingUnit(string title, ActivityStatus status)
         {
             Title = title;
             ActivityStatus = status;
+        }
+
+        protected ReadingUnit(string id, string title, ActivityStatus status, IEnumerable<ActivitySession> sessions)
+        {
+            Id = id;
+            Title = title;
+            ActivityStatus = status;
+            CompletedSessions = sessions;
         }
 
         public string Id { get; private set; }

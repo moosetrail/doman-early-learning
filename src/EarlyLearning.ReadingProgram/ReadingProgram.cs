@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EarlyLearning.Core.Program;
 using EarlyLearning.ReadingPrograms.DataModels;
 
 namespace EarlyLearning.ReadingPrograms
@@ -15,7 +16,7 @@ namespace EarlyLearning.ReadingPrograms
 
         Task Add(T toAdd, string programId);
 
-        Task ChangeStatus(string unitId, int newStatus);
+        Task ChangeStatus(string unitId, ActivityStatus newStatus);
 
         Task MovePlanned(string unitId, string programId, int toSpot);
     }

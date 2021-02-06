@@ -54,6 +54,12 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
             {
                 var category = NewWordCategory(status);
                 var dto = category.ToDTO(programId);
+
+                if (status is Planned)
+                {
+                    dto.ActivityStatus.SortingIndex = i;
+                }
+
                 session.Store(dto);
                 categories.Add(dto);
             }

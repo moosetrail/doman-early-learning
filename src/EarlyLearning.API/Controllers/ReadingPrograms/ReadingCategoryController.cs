@@ -68,7 +68,8 @@ namespace EarlyLearning.API.Controllers.ReadingPrograms
         [Route("status")]
         public async Task<IActionResult> ChangeStatus([FromQuery] string unitId, [FromQuery] int newStatus)
         {
-            await _program.ChangeStatus(unitId, newStatus);
+
+            await _program.ChangeStatus(unitId, null); // TODO: Implement change
             return Ok(); 
         }
 
