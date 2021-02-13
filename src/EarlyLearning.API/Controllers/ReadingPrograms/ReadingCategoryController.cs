@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EarlyLearning.API.Models.ReadingPrograms;
+using EarlyLearning.Core.Program;
+using EarlyLearning.Core.Program.ActivityStatuses;
 using EarlyLearning.ReadingPrograms;
 using EarlyLearning.ReadingPrograms.DataModels;
 using Microsoft.AspNetCore.Mvc;
@@ -55,7 +57,7 @@ namespace EarlyLearning.API.Controllers.ReadingPrograms
 
         [HttpPost]
         [Route("")]
-        private async Task<IActionResult> Add([FromBody] ReadingCategoryToAddVM unitToAdd, [FromQuery] string programId)
+        public async Task<IActionResult> Add([FromBody] ReadingCategoryToAddVM unitToAdd, [FromQuery] string programId)
         {
             var toAdd = FromVmToUnitToAdd(unitToAdd);
             await _program.Add(toAdd, programId);
@@ -66,11 +68,22 @@ namespace EarlyLearning.API.Controllers.ReadingPrograms
 
         [HttpPatch]
         [Route("status")]
-        public async Task<IActionResult> ChangeStatus([FromQuery] string unitId, [FromQuery] int newStatus)
+        public async Task<IActionResult> ChangeStatus([FromQuery] string unitId, [FromQuery] ReadingUnitStatusVM newStatus)
         {
-
-            await _program.ChangeStatus(unitId, null); // TODO: Implement change
+            var statusToChangeTo = ToStatus(newStatus);
+            await _program.ChangeStatus(unitId, statusToChangeTo);
             return Ok(); 
+        }
+
+        private static ActivityStatus ToStatus(ReadingUnitStatusVM vm)
+        {
+            return vm switch
+            {
+                ReadingUnitStatusVM.Active => new CurrentlyActive(),
+                ReadingUnitStatusVM.Planned => new Planned(),
+                ReadingUnitStatusVM.Retired => new Retired(),
+                _ => throw new NotSupportedException("The supplied status wasn't recognized")
+            };
         }
 
         [HttpPatch]
