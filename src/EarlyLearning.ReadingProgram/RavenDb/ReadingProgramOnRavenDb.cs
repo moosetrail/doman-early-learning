@@ -19,8 +19,8 @@ namespace EarlyLearning.ReadingPrograms.RavenDb
 {
     public class ReadingProgramOnRavenDb : ReadingProgram<ReadingCategory<ReadingWord>>
     {
-        private readonly IAsyncDocumentSession _session;
         private readonly ILogger _logger;
+        private readonly IAsyncDocumentSession _session;
 
         public ReadingProgramOnRavenDb(IAsyncDocumentSession session, ILogger logger)
         {
@@ -35,6 +35,55 @@ namespace EarlyLearning.ReadingPrograms.RavenDb
             return currentCategories;
         }
 
+        public async Task<IEnumerable<ReadingCategory<ReadingWord>>> GetPlanned(string programId, int limit, int offset)
+        {
+            var found = await GetPlannedCategoriesFromRaven(programId, limit, offset);
+            var plannedCategories = found.Select(x => x.ToCategory());
+            return plannedCategories;
+        }
+
+        public async Task<IEnumerable<ReadingCategory<ReadingWord>>> GetRetired(string programId, int limit, int offset)
+        {
+            var found = await GetRetiredCategoriesFromRaven(programId, limit, offset);
+            var retiredCategories = found.Select(x => x.ToCategory());
+            return retiredCategories;
+        }
+
+        public async Task Add(ReadingCategory<ReadingWord> toAdd, string programId)
+        {
+            var dto = toAdd.ToDTO(programId);
+
+            if (dto.ActivityStatus.Type == ActivityStatusType.Planned && dto.ActivityStatus.SortingIndex < 0)
+                await SetSortIndexToLast(programId, dto);
+
+            await _session.StoreAsync(dto);
+            await _session.SaveChangesAsync();
+        }
+
+        public async Task ChangeStatus(string unitId, ActivityStatus newStatus)
+        {
+            var dto = await GetReadingCategoryDTO(unitId);
+
+            if (dto != null)
+            {
+                UpdateActivityStatus(newStatus, dto);
+                await SaveChanges();
+            }
+        }
+
+        public async Task MovePlanned(string unitId, string programId, int toSpot)
+        {
+            var dto = await GetReadingCategoryDTO(unitId);
+
+            if (dto != null)
+            {
+                if (dto.ActivityStatus.Type == ActivityStatusType.Planned)
+                    await ChangeSortIndex(programId, toSpot, dto);
+                else
+                    throw new ApplicationException("Unit is not planned");
+            }
+        }
+
         private async Task<List<ReadingCategoryDTO<ReadingWordDTO>>> GetCurrentCategories(string programId)
         {
             try
@@ -42,6 +91,7 @@ namespace EarlyLearning.ReadingPrograms.RavenDb
                 var found = await CategoriesInProgram(programId)
                     .Where(x => x.ActivityStatus.Type == ActivityStatusType.Active)
                     .ToListAsync();
+                _logger.Debug("Got all active categories");
                 return found;
             }
             catch (Exception e)
@@ -52,23 +102,19 @@ namespace EarlyLearning.ReadingPrograms.RavenDb
 
         private IRavenQueryable<ReadingCategoryDTO<ReadingWordDTO>> CategoriesInProgram(string programId)
         {
+            _logger.ForContext("ProgramId", programId).Debug("Get categories in program");
             return _session.Query<ReadingCategoryDTO<ReadingWordDTO>>()
                 .Where(x => x.ProgramId == programId);
         }
 
-        public async Task<IEnumerable<ReadingCategory<ReadingWord>>> GetPlanned(string programId, int limit, int offset)
-        {
-            var found = await GetPlannedCategoriesFromRaven(programId, limit, offset);
-            var plannedCategories = found.Select(x => x.ToCategory());
-            return plannedCategories;
-        }
-
-        private async Task<List<ReadingCategoryDTO<ReadingWordDTO>>> GetPlannedCategoriesFromRaven(string programId, int limit, int offset)
+        private async Task<List<ReadingCategoryDTO<ReadingWordDTO>>> GetPlannedCategoriesFromRaven(string programId,
+            int limit, int offset)
         {
             try
             {
                 var found = await PlannedUnitsInProgramSorted(programId)
                     .Skip(offset).Take(limit).ToListAsync();
+                _logger.ForContext("Skip", offset).ForContext("Limit", limit).Debug("Got range of planned categories");
                 return found;
             }
             catch (Exception e)
@@ -90,14 +136,8 @@ namespace EarlyLearning.ReadingPrograms.RavenDb
                 .OrderBy(x => x.ActivityStatus.SortingIndex);
         }
 
-        public async Task<IEnumerable<ReadingCategory<ReadingWord>>> GetRetired(string programId, int limit, int offset)
-        {
-            var found = await GetRetiredCategoriesFromRaven(programId, limit, offset);
-            var retiredCategories = found.Select(x => x.ToCategory());
-            return retiredCategories;
-        }
-
-        private async Task<List<ReadingCategoryDTO<ReadingWordDTO>>> GetRetiredCategoriesFromRaven(string programId, int limit, int offset)
+        private async Task<List<ReadingCategoryDTO<ReadingWordDTO>>> GetRetiredCategoriesFromRaven(string programId,
+            int limit, int offset)
         {
             try
             {
@@ -110,28 +150,6 @@ namespace EarlyLearning.ReadingPrograms.RavenDb
             catch (Exception e)
             {
                 throw new RavenDbException(e);
-            }
-        }
-
-        public async Task Add(ReadingCategory<ReadingWord> toAdd, string programId)
-        {
-            var dto = toAdd.ToDTO(programId);
-
-            if (dto.ActivityStatus.Type == ActivityStatusType.Planned && dto.ActivityStatus.SortingIndex < 0)
-                await SetSortIndexToLast(programId, dto);
-            
-            await _session.StoreAsync(dto);
-            await _session.SaveChangesAsync();
-        }
-
-        public async Task ChangeStatus(string unitId, ActivityStatus newStatus)
-        {
-            var dto = await GetReadingCategoryDTO(unitId);
-
-            if (dto != null)
-            {
-                UpdateActivityStatus(newStatus, dto);
-                await SaveChanges();
             }
         }
 
@@ -166,60 +184,39 @@ namespace EarlyLearning.ReadingPrograms.RavenDb
             _logger.Information("Session saved");
         }
 
-        public async Task MovePlanned(string unitId, string programId, int toSpot)
-        {
-            var dto = await GetReadingCategoryDTO(unitId);
-
-            if (dto != null)
-            {
-                if (dto.ActivityStatus.Type == ActivityStatusType.Planned)
-                {
-                    await ChangeSortIndex(programId, toSpot, dto);
-                }
-                else
-                {
-                    throw new ApplicationException("Unit is not planned");
-                }
-            } 
-        }
-
         private async Task ChangeSortIndex(string programId, int toSpot, ReadingCategoryDTO<ReadingWordDTO> dto)
         {
-            if (toSpot < 0)
-            {
-                await SetSortIndexToLast(programId, dto);
-            }
+            if (toSpot < 0) await SetSortIndexToLast(programId, dto);
 
-            if (toSpot == 0)
-            {
-                await SetSortIndexToFirst(programId, dto);
-            }
+            if (toSpot == 0) await SetSortIndexToFirst(programId, dto);
 
-            if (toSpot > 0)
-            {
-                await UpdateSortIndex(programId, toSpot, dto);
-            }
+            if (toSpot > 0) await UpdateSortIndex(programId, toSpot, dto);
 
             await SaveChanges();
         }
 
-        private async Task SetSortIndexToFirst(string programId, ReadingCategoryDTO<ReadingWordDTO> dto)
+        private async Task SetSortIndexToFirst(string programId, ReadingUnitDTO dto)
         {
+            _logger.ForContext("UnitId", dto.Id).Debug("Move unit to first spot");
             var currentFrontTwo = await PlannedUnitsInProgramSorted(programId).Take(2).ToListAsync();
             var currentFront = currentFrontTwo.First();
             currentFront.ActivityStatus.SortingIndex = CalculateNewSortIndex(currentFrontTwo);
             dto.ActivityStatus.SortingIndex = 0;
         }
 
-        private async Task UpdateSortIndex(string programId, int toSpot, ReadingCategoryDTO<ReadingWordDTO> dto)
+        private async Task UpdateSortIndex(string programId, int toSpot, ReadingUnitDTO dto)
         {
+            _logger.ForContext("UnitId", dto.Id).Debug("Move unit to spot {spot}", toSpot);
+
             var toSkip = toSpot;
 
             if (toSpot < dto.ActivityStatus.SortingIndex)
             {
                 toSkip -= 1;
+                _logger.Debug("Moving to before current position, skipping one less");
             }
 
+            _logger.Debug("Skipping {toSkip} to find indexes", toSkip);
             var plannedToBeBetween = await CategoriesInProgram(programId)
                 .Where(x => x.ActivityStatus.Type == ActivityStatusType.Planned)
                 .OrderBy(x => x.ActivityStatus.SortingIndex)
@@ -232,6 +229,7 @@ namespace EarlyLearning.ReadingPrograms.RavenDb
 
         private async Task SetSortIndexToLast(string programId, ReadingUnitDTO dto)
         {
+            _logger.ForContext("UnitId", dto.Id).Debug("Move unit to last spot");
             var currentTail =
                 await PlannedUnitsInProgram(programId)
                     .OrderByDescending(x => x.ActivityStatus.SortingIndex).FirstAsync();
@@ -240,17 +238,21 @@ namespace EarlyLearning.ReadingPrograms.RavenDb
 
         private decimal CalculateNewSortIndex(IEnumerable<ReadingCategoryDTO<ReadingWordDTO>> toBeBetween)
         {
+            var front = toBeBetween.First();
+            var behind = toBeBetween.Last();
+            _logger.ForContext("ToBeBehind", front.Id).ForContext("ToBeInfrontOf", behind.Id).Debug("Calculate index to be between found");
+
             return CalculateNewSortIndex(
-                toBeBetween.ElementAt(0).ActivityStatus, 
-                toBeBetween.ElementAt(1).ActivityStatus);
+                front.ActivityStatus,
+                behind.ActivityStatus);
         }
 
         private decimal CalculateNewSortIndex(ActivityStatusDTO statusBefore, ActivityStatusDTO statusAfter)
         {
-            var diff = (statusAfter.SortingIndex - statusBefore.SortingIndex)/2;
+            var diff = (statusAfter.SortingIndex - statusBefore.SortingIndex) / 2;
             var newSortIndex = statusBefore.SortingIndex + diff;
 
-            _logger.Debug("Calculated new sort index to " + newSortIndex);
+            _logger.Debug("Calculated new sort index to {newIndex}", newSortIndex);
 
             return newSortIndex;
         }
@@ -260,7 +262,7 @@ namespace EarlyLearning.ReadingPrograms.RavenDb
             var roundedTailIndex = Math.Round(currentTail.ActivityStatus.SortingIndex, 0);
             var newTailIndex = roundedTailIndex + 1;
 
-            _logger.Debug("Calculated new tail sort index to " + newTailIndex);
+            _logger.ForContext("OldTailIndex", currentTail.ActivityStatus.SortingIndex).Debug("Calculated new tail sort index to {newIndex}", newTailIndex);
 
             return newTailIndex;
         }
