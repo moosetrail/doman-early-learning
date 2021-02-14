@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  earlylearning.api:
+    image: early-learning-api
+    build:
+      context: .
+      dockerfile: src/EarlyLearning.API/Dockerfile
+    ports:
+     - 5000:80
+    depends_on:
+     - ravendb
+     - seq
+    environment: 
+     - Serilog__WriteTo__1__Args__serverUrl=http://seq:5341
+     - RavenDbUrl=http://ravendb:8080
+     - APPINSIGHTS_INSTRUMENTATIONKEY=35bdb25c-4f94-4c20-b45f-91ab6dfcf006
+     - CORS=https://localhost:4220
+     - LoggingLevel=Debug
+
+  ravendb:
+   image: ravendb/ravendb
+   ports: 
+    - 5100:8080
+   environment: 
+    - RAVEN_ARGS=--Setup.Mode=None --log-to-console
+    - RAVEN_Security_UnsecuredAccessAllowed=PrivateNetwork
+    - RAVEN_License_Eula_Accepted=true
+  
+  seq: 
+   image: datalust/seq:latest
+   ports: 
+    - 5341:5341
+    - 5102:80
+   environment: 
+     ACCEPT_EULA: Y

@@ -21,9 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EarlyLearning.People", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EarlyLearning.ReadingProgram", "src\EarlyLearning.ReadingProgram\EarlyLearning.ReadingProgram.csproj", "{EF8776C5-9700-4C26-BD10-15844D5260BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EarlyLearning.RavenDb.Setup", "src\EarlyLearning.RavenDb.Setup\EarlyLearning.RavenDb.Setup.csproj", "{5F7587C6-0D35-49EE-B30D-2D85506518F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EarlyLearning.RavenDb.Setup", "src\EarlyLearning.RavenDb.Setup\EarlyLearning.RavenDb.Setup.csproj", "{5F7587C6-0D35-49EE-B30D-2D85506518F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EarlyLearning.RavenDb", "src\EarlyLearning.RavenDb\EarlyLearning.RavenDb.csproj", "{85B01C26-D9E9-47C6-827C-606E4163C2E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EarlyLearning.RavenDb", "src\EarlyLearning.RavenDb\EarlyLearning.RavenDb.csproj", "{85B01C26-D9E9-47C6-827C-606E4163C2E4}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C949DDB9-4F26-4309-8DFF-577125A5DB38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{85B01C26-D9E9-47C6-827C-606E4163C2E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85B01C26-D9E9-47C6-827C-606E4163C2E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85B01C26-D9E9-47C6-827C-606E4163C2E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C949DDB9-4F26-4309-8DFF-577125A5DB38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C949DDB9-4F26-4309-8DFF-577125A5DB38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C949DDB9-4F26-4309-8DFF-577125A5DB38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C949DDB9-4F26-4309-8DFF-577125A5DB38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
