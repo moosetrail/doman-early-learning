@@ -14,7 +14,7 @@ services:
     environment: 
      - Serilog__WriteTo__1__Args__serverUrl=http://seq:5341
      - RavenDbUrl=http://ravendb:8080
-     - APPINSIGHTS_INSTRUMENTATIONKEY=35bdb25c-4f94-4c20-b45f-91ab6dfcf006
+     - APPINSIGHTS_INSTRUMENTATIONKEY=abcdef
      - CORS=https://localhost:4220
      - LoggingLevel=Debug
 

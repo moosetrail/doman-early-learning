@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using EarlyLearning.RavenDb.Setup.Populators;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Operations;
 using Raven.Client.Exceptions;
@@ -49,7 +50,7 @@ namespace EarlyLearning.RavenDb.Setup
 
         public async Task Populate(IDocumentStore store)
         {
-          
+            var children = await new ChildPopulator(store.OpenAsyncSession()).Run();
         }
 
         public async Task<IDocumentStore> Create(string url)
@@ -63,7 +64,7 @@ namespace EarlyLearning.RavenDb.Setup
         public async Task<IDocumentStore> CreateWithoutData(string url)
         {
             var setup = new GenericRavenDbSetup(_logger, _indexManager);
-            var dbName = "FunToLearn-Dev";
+            var dbName = "EarlyLearning-Dev";
 
             var store = setup.InitializeDatastore(dbName, url);
             await EnsureDatabaseExistsAsync(store, dbName);

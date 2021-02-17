@@ -27,7 +27,7 @@ namespace EarlyLearning.RavenDb.Setup
         private async Task<IDocumentStore> createStoreWithCert(string url, X509Certificate2 certificate)
         {
             var setup = new GenericRavenDbSetup(_logger, _indexManager);
-            var store = setup.InitializeDatastore("FunToLearn", url, certificate);
+            var store = setup.InitializeDatastore("EarlyLearning", url, certificate);
             await setup.AddIndexesToDatabase(store);
 
             return store;
