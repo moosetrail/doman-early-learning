@@ -41,7 +41,7 @@ namespace EarlyLearning.Tests.TestHelpers.Asserts
         {
             HttpResultIsOk(actualResponse);
 
-            var actualVms = DataInMessage<IEnumerable<ReadingProgramVM>>(actualResponse);
+            var actualVms = DataInResult<IEnumerable<ReadingProgramVM>>(actualResponse);
             AreEqual(expectedPrograms, actualVms, AreEqual);
         }
     }

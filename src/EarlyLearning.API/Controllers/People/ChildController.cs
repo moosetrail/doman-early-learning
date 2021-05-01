@@ -11,8 +11,8 @@ using Serilog;
 
 namespace EarlyLearning.API.Controllers.People
 {
-    [Authorize]
-    [Route("api/children")]
+    // [Authorize]
+    [Route("api/v1/children")]
     [ApiController]
     public class ChildController : ApiControllerBase
     {

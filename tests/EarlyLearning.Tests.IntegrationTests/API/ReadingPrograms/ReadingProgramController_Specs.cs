@@ -15,9 +15,9 @@ namespace EarlyLearning.Tests.IntegrationTests.API.ReadingPrograms
             // Given
             var programs = new[]
             {
-                TestFactory.AddNewReadingProgram()
+                _testFactory.AddNewReadingProgram()
             };
-            TestFactory.AddNewReadingProgram("other id");
+            _testFactory.AddNewReadingProgram("other id");
 
             // When
             var result = await SUT.GetAsync(baseUrl);

@@ -23,7 +23,7 @@ namespace EarlyLearning.Tests.TestHelpers.Asserts
             return data;
         }
 
-        private static T DataInMessage<T>(HttpResponseMessage message) where T : class
+        public static T DataInResult<T>(HttpResponseMessage message) where T : class
         {
             var json = message.Content.ReadAsStringAsync().Result;
             return TestFactory.TestFactory.FromJson<T>(json);

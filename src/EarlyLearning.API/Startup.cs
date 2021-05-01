@@ -1,5 +1,8 @@
 using System.Threading.Tasks;
 using EarlyLearning.API.DependencyInjection;
+using EarlyLearning.API.Fakes;
+using EarlyLearning.Core.People;
+using EarlyLearning.People.DataModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +31,7 @@ namespace EarlyLearning.API
         {
             services.AddControllers();
             EarlyLearningAPI.BuildDependencies(services);
+            services.AddTransient<CurrentUser, CurrentFakeUser>();
             Task.WaitAll(ConfigureRavenDb(services));
         }
 

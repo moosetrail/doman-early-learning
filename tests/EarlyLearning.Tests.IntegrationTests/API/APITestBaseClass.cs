@@ -8,9 +8,9 @@ namespace EarlyLearning.Tests.IntegrationTests.API
 {
     public abstract class APITestBaseClass
     {
-        protected static readonly TestFactory TestFactory = new TestFactory();
+        protected static readonly TestFactory _testFactory = new TestFactory();
 
-        protected static readonly WebApplicationFactory<Startup> ServerFactory = new EarlyLearningAPIFactory<Startup>(TestFactory);
+        protected static readonly WebApplicationFactory<Startup> ServerFactory = new EarlyLearningAPIFactory<Startup>(_testFactory);
 
         protected HttpClient SUT;
 
