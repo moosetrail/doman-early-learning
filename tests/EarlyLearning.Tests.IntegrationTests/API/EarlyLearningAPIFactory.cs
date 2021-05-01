@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using EarlyLearning.People.DataModels;
+using EarlyLearning.API.Dataclasses.User;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;

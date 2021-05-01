@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="API\Controllers\People\" />
+    <Folder Include="People\" />
   </ItemGroup>
 
   <ItemGroup>

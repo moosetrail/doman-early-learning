@@ -1,6 +1,5 @@
-﻿using EarlyLearning.API.Fakes;
-using EarlyLearning.People.DataModels;
-using Moq;
+﻿using EarlyLearning.API.Dataclasses.User;
+using EarlyLearning.API.Fakes;
 
 namespace EarlyLearning.Tests.TestHelpers.TestFactory
 {

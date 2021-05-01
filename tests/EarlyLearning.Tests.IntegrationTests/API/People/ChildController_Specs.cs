@@ -17,10 +17,12 @@ namespace EarlyLearning.Tests.IntegrationTests.API.People
             var currentUserId = "abcd-abcd-abcd-abcd";
             var children = new[]
             {
-                _testFactory.AddNewChild("Name 1", currentUserId),
-                _testFactory.AddNewChild("Name 2", currentUserId)
+                _testFactory.AddNewChild("Name 1", "Smith",  currentUserId),
+                _testFactory.AddNewChild("Name 2", "Smith", currentUserId)
             };
-            _testFactory.AddNewChild("Name 3", "1234-1234-1234-1234");
+            _testFactory.AddNewChild("Name 3", "Olson", "1234-1234-1234-1234");
+
+            _testFactory.WaitOfIndexesInDocumentStore();
 
             // When
             var result = await SUT.GetAsync(baseUrl);

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using EarlyLearning.API.Dataclasses.User;
 using EarlyLearning.API.Models.People;
+using EarlyLearning.Core.DTOForRavenDb;
 using EarlyLearning.Core.People;
 using EarlyLearning.People.DataModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
@@ -11,12 +13,11 @@ using Serilog;
 
 namespace EarlyLearning.API.Controllers.People
 {
-    // [Authorize]
     [Route("api/v1/children")]
     [ApiController]
     public class ChildController : ApiControllerBase
     {
-        public ChildController(AppUser currentUser, IAsyncDocumentSession session, ILogger logger)
+        public ChildController(CurrentUser currentUser, IAsyncDocumentSession session, ILogger logger)
         : base(logger.ForContext<ChildController>(), session, currentUser)
         {
         }
@@ -60,8 +61,8 @@ namespace EarlyLearning.API.Controllers.People
         [Route("")]
         public async Task<IEnumerable<ChildVM>> GetChildren()
         {
-            var user = await Session.Query<AdultProgrammer>().SingleOrDefaultAsync(x => x.Email == AppUserEmail);
-
+            var children = await Session.Query<ChildDTO>().Where(x => x.Adults.Any(a => a == AppUserEmail))
+                .ToListAsync();
             return null;
         }
     }

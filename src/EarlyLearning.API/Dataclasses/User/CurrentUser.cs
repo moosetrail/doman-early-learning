@@ -1,4 +1,4 @@
-﻿namespace EarlyLearning.People.DataModels
+﻿namespace EarlyLearning.API.Dataclasses.User
 {
     public interface CurrentUser
     {

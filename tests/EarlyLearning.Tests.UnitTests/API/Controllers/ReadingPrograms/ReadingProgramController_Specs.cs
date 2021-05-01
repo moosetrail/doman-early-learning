@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using EarlyLearning.API.Controllers;
 using EarlyLearning.API.Controllers.ReadingPrograms;
-using EarlyLearning.People.DataModels;
+using EarlyLearning.API.Dataclasses.User;
 using EarlyLearning.ReadingPrograms;
 using EarlyLearning.Tests.TestHelpers.Asserts;
 using EarlyLearning.Tests.TestHelpers.TestFactory;

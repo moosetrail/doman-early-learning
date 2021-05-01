@@ -1,14 +1,13 @@
 using System.Threading.Tasks;
 using EarlyLearning.API.DependencyInjection;
 using EarlyLearning.API.Fakes;
-using EarlyLearning.Core.People;
-using EarlyLearning.People.DataModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using CurrentUser = EarlyLearning.API.Dataclasses.User.CurrentUser;
 
 namespace EarlyLearning.API
 {

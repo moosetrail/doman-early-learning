@@ -5,6 +5,7 @@ using EarlyLearning.People.DataModels;
 using EarlyLearning.ReadingPrograms;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using CurrentUser = EarlyLearning.API.Dataclasses.User.CurrentUser;
 
 namespace EarlyLearning.API.Controllers.ReadingPrograms
 {

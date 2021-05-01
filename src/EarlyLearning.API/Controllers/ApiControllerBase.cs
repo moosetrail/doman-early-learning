@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using EarlyLearning.API.Dataclasses.User;
 using EarlyLearning.Core.People;
 using Microsoft.AspNetCore.Mvc;
 using Raven.Client.Documents;
@@ -13,9 +14,9 @@ namespace EarlyLearning.API.Controllers
     {
         protected readonly ILogger Logger;
         protected readonly IAsyncDocumentSession Session;
-        private readonly AppUser _currentUser;
+        private readonly CurrentUser _currentUser;
 
-        protected ApiControllerBase(ILogger logger, IAsyncDocumentSession session = null, AppUser currentUser = null)
+        protected ApiControllerBase(ILogger logger, IAsyncDocumentSession session = null, CurrentUser currentUser = null)
         {
             Logger = logger.ForContext<ApiControllerBase>()
                 .ForContext("User", User != null ? User.Identity?.Name : "Not Authenticated");
@@ -34,6 +35,6 @@ namespace EarlyLearning.API.Controllers
             }
         }
 
-        protected string AppUserEmail => _currentUser.Email;
+        protected string AppUserEmail => _currentUser.UserId;
     }
 }

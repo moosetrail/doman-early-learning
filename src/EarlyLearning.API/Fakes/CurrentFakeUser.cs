@@ -1,4 +1,5 @@
 ﻿using EarlyLearning.People.DataModels;
+using CurrentUser = EarlyLearning.API.Dataclasses.User.CurrentUser;
 
 namespace EarlyLearning.API.Fakes
 {
