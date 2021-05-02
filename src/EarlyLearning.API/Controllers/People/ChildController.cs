@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using EarlyLearning.API.Dataclasses.User;
 using EarlyLearning.API.Models.People;
-using EarlyLearning.Core.DTOForRavenDb;
+using EarlyLearning.Core;
 using EarlyLearning.Core.People;
-using EarlyLearning.People.DataModels;
 using Microsoft.AspNetCore.Mvc;
-using Raven.Client.Documents;
-using Raven.Client.Documents.Session;
 using Serilog;
 
 namespace EarlyLearning.API.Controllers.People
@@ -17,34 +13,30 @@ namespace EarlyLearning.API.Controllers.People
     [ApiController]
     public class ChildController : ApiControllerBase
     {
-        public ChildController(CurrentUser currentUser, IAsyncDocumentSession session, ILogger logger)
-        : base(logger.ForContext<ChildController>(), session, currentUser)
+        private readonly ChildManager _manager;
+
+        public ChildController(CurrentUser currentUser, ChildManager manager, ILogger logger)
+        : base(logger.ForContext<ChildController>(), currentUser: currentUser)
         {
+            _manager = manager;
         }
 
         [HttpPost]
         [Route("")]
-        public async Task<ChildVM> AddChild(ChildVM child)
+        public async Task<IActionResult> AddChild(AddChildVM child)
         {
-            var nbrChildrenWithSameName = await Session.Query<Child>()
-                .CountAsync(x => x.FirstName == child.FirstName && x.LastName == child.LastName);
+            if (!ModelState.IsValid)
+                return InvalidChildToAdd(child);
 
-            var childToAdd = new Child(child.FirstName, child.LastName);
-            childToAdd.SetIdWithNumber(nbrChildrenWithSameName + 1);
+            var addedChild = await _manager.AddChildForUser(child.FirstName, child.LastName, UserId);
+            var childVM = ChildToVM(addedChild);
+            return Ok(childVM);
+        }
 
-            await Session.StoreAsync(childToAdd);
-            Logger.ForContext("Child", child).Information("Stored to session");
-
-            if (CurrentUser is AdultProgrammer adult)
-            {
-                adult.AddChild(childToAdd.Id);
-                Logger.ForContext("ChildId", child.Id).ForContext("AdultProgrammer", CurrentUser.Email).Information("Added child to adult");
-            }
-
-            await Session.SaveChangesAsync();
-            Logger.Information("Session saved");
-
-            return ChildToVM(childToAdd);
+        private IActionResult InvalidChildToAdd(AddChildVM child)
+        {
+            Logger.ForContext("Child", child).Information("Tried to add invalid child");
+            return BadRequest("Invalid child");
         }
 
         private static ChildVM ChildToVM(Child child)
@@ -59,11 +51,11 @@ namespace EarlyLearning.API.Controllers.People
 
         [HttpGet]
         [Route("")]
-        public async Task<IEnumerable<ChildVM>> GetChildren()
+        public async Task<IActionResult> GetChildren()
         {
-            var children = await Session.Query<ChildDTO>().Where(x => x.Adults.Any(a => a == AppUserEmail))
-                .ToListAsync();
-            return null;
+            var foundChildren = await _manager.GetChildrenForUser(UserId);
+            var childrenVMs = foundChildren.Select(ChildToVM);
+            return Ok(childrenVMs);
         }
     }
 }

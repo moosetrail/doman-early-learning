@@ -1,21 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using EarlyLearning.Core.DTOForRavenDb.Mappers;
+using EarlyLearning.Core;
 using EarlyLearning.Core.People;
-using Raven.Client.Documents.Session;
 
 namespace EarlyLearning.RavenDb.Setup.Populators
 {
     internal class ChildPopulator
     {
-        private readonly IAsyncDocumentSession _session;
+        private readonly ChildManager _manager;
 
         private string[] children = {"Zacharias", "Jacqueline", "Dominiqué", "Phoenix"};
         private string[] otherChildren = {"Alan", "Nick", "Amanda"};
 
-        public ChildPopulator(IAsyncDocumentSession session)
+        public ChildPopulator(ChildManager manager)
         {
-            _session = session;
+            _manager = manager;
         }
 
         public async Task<IEnumerable<Child>> Run()
@@ -25,7 +24,6 @@ namespace EarlyLearning.RavenDb.Setup.Populators
             await AddChildrenInList(childList, children, "Hultén", "abcd-abcd-abcd-abcd");
             await AddChildrenInList(childList, otherChildren, "Andersson", "xyz-xyz-xyz");
 
-            await _session.SaveChangesAsync();
             return null;
         }
 
@@ -33,11 +31,7 @@ namespace EarlyLearning.RavenDb.Setup.Populators
         {
             foreach (var name in names)
             {
-                var child = new Child(name, lastName);
-                var dto = child.ToDTO();
-                dto.Adults = new[] {adultId};
-                await _session.StoreAsync(dto);
-                childList.Add(child);
+                await _manager.AddChildForUser(name, lastName, adultId);
             }
         }
     }

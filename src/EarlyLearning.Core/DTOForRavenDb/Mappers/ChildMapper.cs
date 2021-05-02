@@ -2,7 +2,7 @@
 
 namespace EarlyLearning.Core.DTOForRavenDb.Mappers
 {
-    public static class ChildMapper
+    internal static class ChildMapper
     {
         public static ChildDTO ToDTO(this Child child)
         {
@@ -14,6 +14,11 @@ namespace EarlyLearning.Core.DTOForRavenDb.Mappers
             };
 
             return dto;
+        }
+
+        public static Child ToChild(this ChildDTO dto)
+        {
+            return new Child(dto.Id, dto.FirstName, dto.LastName);
         }
     }
 }

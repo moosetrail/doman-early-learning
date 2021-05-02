@@ -1,18 +1,28 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using EarlyLearning.Core.DTOForRavenDb;
+using EarlyLearning.Core;
 using EarlyLearning.Core.People;
+using EarlyLearning.Core.RavenDb;
 
 namespace EarlyLearning.Tests.TestHelpers.TestFactory
 {
     public partial class TestFactory
     {
+        private ChildManager _childManager;
+
+        private ChildManager ChildManager
+        {
+            get
+            {
+                return _childManager ??= new ChildManagerOnRavenDb(DocumentStore.OpenAsyncSession(), TestLogger());
+            }
+        }
+
         public Child NewChild(string firstName = null, string lastName = null)
         {
             firstName ??= "Child " + random.Next(1, 100);
             lastName ??= "Lastname " + random.Next(1, 100);
 
-            return new Child(firstName, lastName);
+            return new Child($"Child/{lastName}, {firstName}, ", firstName, lastName);
         }
 
         public IEnumerable<Child> NewChildList(int nbrOfChildren = 5)
@@ -29,23 +39,10 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
 
         public Child AddNewChild(string firstName = null, string lastName = null, params string[] adults)
         {
-            var child = new ChildDTO
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                Adults = adults.Where(x => !string.IsNullOrWhiteSpace(x))
-            };
+            var task = ChildManager.AddChildForUser(firstName, lastName, adults[0]);
+            var child = task.Result;
 
-            using var session = DocumentStore.OpenSession();
-            session.Store(child);
-            session.SaveChanges();
-
-            return MapToChild(child);
-        }
-
-        private static Child MapToChild(ChildDTO child)
-        {
-            return new Child(child.Id, child.FirstName, child.LastName);
+            return child;
         }
     }
 }

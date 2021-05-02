@@ -2,12 +2,12 @@
 using System.Threading.Tasks;
 using EarlyLearning.Core.People;
 
-namespace EarlyLearning.People
+namespace EarlyLearning.Core
 {
     public interface ChildManager
     {
-        Task<Child> AddChildWithAdult(string firstName, string lastname, string adultId);
+        Task<Child> AddChildForUser(string firstName, string lastname, string userId);
 
-        Task<IEnumerable<Child>> GetChildrenForAdult(string adultId);
+        Task<IEnumerable<Child>> GetChildrenForUser(string adultId);
     }
 }

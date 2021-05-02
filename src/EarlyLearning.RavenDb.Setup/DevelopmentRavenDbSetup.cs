@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using EarlyLearning.Core.RavenDb;
 using EarlyLearning.RavenDb.Setup.Populators;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Operations;
@@ -50,7 +51,8 @@ namespace EarlyLearning.RavenDb.Setup
 
         public async Task Populate(IDocumentStore store)
         {
-            var children = await new ChildPopulator(store.OpenAsyncSession()).Run();
+            var childManager = new ChildManagerOnRavenDb(store.OpenAsyncSession(), _logger);
+            var children = await new ChildPopulator(childManager).Run();
         }
 
         public async Task<IDocumentStore> Create(string url)

@@ -2,7 +2,7 @@
 
 namespace EarlyLearning.Core.DTOForRavenDb
 {
-    public class ChildDTO
+    internal class ChildDTO
     {
         public string Id { get; set; }
 

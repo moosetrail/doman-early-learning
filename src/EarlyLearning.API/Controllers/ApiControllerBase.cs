@@ -28,13 +28,13 @@ namespace EarlyLearning.API.Controllers
         {
             get
             {
-                var searchForUser = Session.Query<AppUser>().SingleOrDefaultAsync(u => u.Email == User.Identity.Name);
+                var searchForUser = Session.Query<AppUser>().SingleOrDefaultAsync(u => u.Id == User.Identity.Name);
                 Task.WaitAll(searchForUser);
 
                 return searchForUser.Result;
             }
         }
 
-        protected string AppUserEmail => _currentUser.UserId;
+        protected string UserId => _currentUser.UserId;
     }
 }

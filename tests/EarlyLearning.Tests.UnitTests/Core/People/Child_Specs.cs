@@ -12,7 +12,7 @@ namespace EarlyLearning.Tests.UnitTests.Core.People
         [SetUp]
         public void Setup()
         {
-            SUT = new Child("Firstname", "Lastname");
+            SUT = new Child("id", "Firstname", "Lastname");
         }
 
         [TearDown]
@@ -20,8 +20,6 @@ namespace EarlyLearning.Tests.UnitTests.Core.People
         {
             SUT = null;
         }
-
-        #region Constructor
 
         [Test]
         public void Constructor_should_set_firstname()
@@ -41,25 +39,7 @@ namespace EarlyLearning.Tests.UnitTests.Core.People
         public void Constructor_should_set_id()
         {
             // Then 
-            Assert.AreEqual(ExpectedChildId, SUT.Id);
+            Assert.AreEqual("id", SUT.Id);
         }
-
-        private static string ExpectedChildId => "Child/Lastname, Firstname";
-
-        #endregion
-
-        #region SetIdWithNumber
-
-        [Test]
-        public void SetIdWithNumber_should_set_id_with_number_on_end()
-        {
-            // When
-            SUT.SetIdWithNumber(3);
-
-            // Then 
-            Assert.AreEqual(ExpectedChildId + " - 3", SUT.Id);
-        }
-
-        #endregion
     }
 }

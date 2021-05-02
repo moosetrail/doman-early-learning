@@ -4,12 +4,10 @@ namespace EarlyLearning.Core.People
 {
     public class Child : IEquatable<Child>
     {
-        public Child(string firstName, string lastName)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            Id = CreateBasicId();
-        }
+        /// <summary>
+        /// Default constructor used by RavenDb
+        /// </summary>
+        private Child(){}
 
         public Child(string id, string firstName, string lastName)
         {
@@ -18,22 +16,12 @@ namespace EarlyLearning.Core.People
             Id = id;
         }
 
-        private string CreateBasicId()
-        {
-            return "Child/" + LastName + ", " + FirstName;
-        }
-
         public string Id { get; private set; }
 
         public string FirstName { get; private set; }
 
         public string LastName { get; private set; }
 
-
-        public void SetIdWithNumber(int nbr)
-        {
-            Id = CreateBasicId() + " - " + nbr;
-        }
 
         public override bool Equals(object obj)
         {
