@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using EarlyLearning.Core.DTOForRavenDb;
 using EarlyLearning.ReadingPrograms.RavenDb.DataTransferObjects;
 using Raven.Client.Documents.Indexes;
 
@@ -18,7 +17,7 @@ namespace EarlyLearning.ReadingPrograms.RavenDb.Indexes
             Map = programs => from program in programs
                 select new Result
                 {
-                    //UserIds = LoadDocument<ChildDTO>(program.ChildrenIds).SelectMany(x => x.Adults).Distinct()
+                    UserIds = new List<string>()
                 };
         }
     }
