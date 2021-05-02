@@ -1,9 +1,5 @@
-﻿using System.Threading.Tasks;
-using EarlyLearning.API.Dataclasses.User;
-using EarlyLearning.Core.People;
+﻿using EarlyLearning.API.Dataclasses.User;
 using Microsoft.AspNetCore.Mvc;
-using Raven.Client.Documents;
-using Raven.Client.Documents.Session;
 using Serilog;
 
 namespace EarlyLearning.API.Controllers
@@ -13,26 +9,13 @@ namespace EarlyLearning.API.Controllers
     public abstract class ApiControllerBase : ControllerBase
     {
         protected readonly ILogger Logger;
-        protected readonly IAsyncDocumentSession Session;
         private readonly CurrentUser _currentUser;
 
-        protected ApiControllerBase(ILogger logger, IAsyncDocumentSession session = null, CurrentUser currentUser = null)
+        protected ApiControllerBase(ILogger logger, CurrentUser currentUser = null)
         {
             Logger = logger.ForContext<ApiControllerBase>()
                 .ForContext("User", User != null ? User.Identity?.Name : "Not Authenticated");
-            Session = session;
             _currentUser = currentUser;
-        }
-
-        protected AppUser CurrentUser
-        {
-            get
-            {
-                var searchForUser = Session.Query<AppUser>().SingleOrDefaultAsync(u => u.Id == User.Identity.Name);
-                Task.WaitAll(searchForUser);
-
-                return searchForUser.Result;
-            }
         }
 
         protected string UserId => _currentUser.UserId;
