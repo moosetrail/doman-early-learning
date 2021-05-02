@@ -39,7 +39,9 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
 
         public Child AddNewChild(string firstName = null, string lastName = null, params string[] adults)
         {
-            var task = ChildManager.AddChildForUser(firstName, lastName, adults[0]);
+            var childToAdd = NewChild(firstName, lastName);
+
+            var task = ChildManager.AddChildForUser(childToAdd.FirstName, childToAdd.LastName, adults[0]);
             var child = task.Result;
 
             return child;

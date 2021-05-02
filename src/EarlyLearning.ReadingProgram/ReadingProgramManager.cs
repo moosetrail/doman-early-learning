@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using EarlyLearning.ReadingPrograms.DataModels;
-using EarlyLearning.ReadingPrograms.DataModels.ReadingUnits;
 
 namespace EarlyLearning.ReadingPrograms
 {

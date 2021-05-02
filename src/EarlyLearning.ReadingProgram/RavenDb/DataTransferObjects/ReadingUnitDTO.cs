@@ -4,7 +4,7 @@ using EarlyLearning.Core.RavenDb.DataTransferObjects;
 
 namespace EarlyLearning.ReadingPrograms.RavenDb.DataTransferObjects
 {
-    public class ReadingUnitDTO
+    public abstract class ReadingUnitDTO
     {
         public string Id { get; set; }
 
