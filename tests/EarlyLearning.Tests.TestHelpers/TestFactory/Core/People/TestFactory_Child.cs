@@ -7,15 +7,7 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
 {
     public partial class TestFactory
     {
-        private ChildManager _childManager;
-
-        private ChildManager ChildManager
-        {
-            get
-            {
-                return _childManager ??= new ChildManagerOnRavenDb(DocumentStore.OpenAsyncSession(), TestLogger());
-            }
-        }
+        private ChildManager ChildManager => new ChildManagerOnRavenDb(ActiveSession, TestLogger());
 
         public Child NewChild(string firstName = null, string lastName = null)
         {

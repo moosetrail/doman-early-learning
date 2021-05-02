@@ -4,6 +4,7 @@ using EarlyLearning.RavenDb.Setup;
 using EarlyLearning.Tests.TestHelpers.RavenDb;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Indexes;
+using Raven.Client.Documents.Session;
 
 namespace EarlyLearning.Tests.TestHelpers.TestFactory
 {
@@ -28,16 +29,21 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
 
         public IDocumentStore DocumentStore { get; set; }
 
+        public IAsyncDocumentSession ActiveSession { get; set; }
+
         public IDocumentStore GenerateNewDocumentStore(bool includeAllIndexes = false)
         {
             RavenDbTestDriver ??= new RavenDBTestDriver();
             DocumentStore = RavenDbTestDriver.GetStore();
+            TestLogger().Debug("Creating a new RavenDb store");
 
             if (includeAllIndexes)
             {
                 AddAllIndexes(DocumentStore);
                 WaitOfIndexesInDocumentStore();
             }
+
+            ActiveSession = DocumentStore.OpenAsyncSession();
 
             return DocumentStore;
         }
@@ -46,9 +52,12 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
         {
             RavenDbTestDriver ??= new RavenDBTestDriver();
             DocumentStore = RavenDbTestDriver.GetStore();
+            TestLogger().Debug("Creating a new RavenDb store");
 
             IndexCreation.CreateIndexes(indexesToCreate, DocumentStore);
             WaitOfIndexesInDocumentStore();
+
+            ActiveSession = DocumentStore.OpenAsyncSession();
 
             return DocumentStore;
         }
@@ -61,6 +70,7 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
 
         public void WaitOfIndexesInDocumentStore()
         {
+            TestLogger().Debug("Waiting for indexes in RavenDb");
             RavenDbTestDriver.WaitIndexing(DocumentStore);
         }
 

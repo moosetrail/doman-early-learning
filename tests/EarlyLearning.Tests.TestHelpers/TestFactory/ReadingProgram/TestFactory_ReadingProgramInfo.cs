@@ -22,6 +22,8 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
                 AddNewChild(adults: userId)
             };
 
+            WaitOfIndexesInDocumentStore();
+
             var dto = new ReadingProgramInfoDTO
             {
                 ChildrenIds = children.Select(x => x.Id)
@@ -30,6 +32,8 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
             using var session = DocumentStore.OpenSession();
             session.Store(dto);
             session.SaveChanges();
+
+            WaitOfIndexesInDocumentStore();
 
             return dto.ToReadingProgramInfo();
         }

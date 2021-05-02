@@ -13,10 +13,10 @@ using NUnit.Framework;
 namespace EarlyLearning.Tests.UnitTests.ReadingPrograms.RavenDb
 {
     [TestFixture]
-    public class ReadingProgramOnRavenDb_Specs
+    public class SingleWordReadingProgramOnRavenDb_Specs
     {
 
-        private ReadingProgramOnRavenDb SUT;
+        private SingleWordReadingProgramOnRavenDb SUT;
         private readonly TestFactory _testFactory = new TestFactory();
         private static string _programId = "ProgramId";
 
@@ -24,7 +24,7 @@ namespace EarlyLearning.Tests.UnitTests.ReadingPrograms.RavenDb
         public void Setup()
         {
             _testFactory.GenerateNewDocumentStore();
-            SUT = new ReadingProgramOnRavenDb(_testFactory.DocumentStore.OpenAsyncSession(), _testFactory.TestLogger());
+            SUT = new SingleWordReadingProgramOnRavenDb(_programId, _testFactory.DocumentStore.OpenAsyncSession(), _testFactory.TestLogger());
         }
 
         [TearDown]
@@ -50,7 +50,7 @@ namespace EarlyLearning.Tests.UnitTests.ReadingPrograms.RavenDb
             _testFactory.WaitOfIndexesInDocumentStore();
 
             // When
-            var result = await SUT.GetCurrent(_programId);
+            var result = await SUT.GetCurrent();
 
             // Then 
             EarlyLearningAssert.AreEqual(categories, result);
@@ -67,7 +67,7 @@ namespace EarlyLearning.Tests.UnitTests.ReadingPrograms.RavenDb
             _testFactory.WaitOfIndexesInDocumentStore();
 
             // When
-            await SUT.MovePlanned(toMove.Id, _programId, 3);
+            await SUT.MovePlanned(toMove.Id, 3);
 
             // Then
             using var session = _testFactory.DocumentStore.OpenSession();
@@ -87,7 +87,7 @@ namespace EarlyLearning.Tests.UnitTests.ReadingPrograms.RavenDb
             _testFactory.WaitOfIndexesInDocumentStore();
 
             // When
-            await SUT.MovePlanned(toMove.Id, _programId, 0);
+            await SUT.MovePlanned(toMove.Id, 0);
 
             // Then 
             using var session = _testFactory.DocumentStore.OpenSession();
@@ -109,7 +109,7 @@ namespace EarlyLearning.Tests.UnitTests.ReadingPrograms.RavenDb
             _testFactory.WaitOfIndexesInDocumentStore();
 
             // When
-            await SUT.MovePlanned(toMove.Id, _programId, -1);
+            await SUT.MovePlanned(toMove.Id, -1);
 
             // Then 
             using var session = _testFactory.DocumentStore.OpenSession();
@@ -129,7 +129,7 @@ namespace EarlyLearning.Tests.UnitTests.ReadingPrograms.RavenDb
             _testFactory.WaitOfIndexesInDocumentStore();
 
             // When
-            await SUT.MovePlanned(toMove.Id, _programId, 1);
+            await SUT.MovePlanned(toMove.Id, 1);
 
             // Then 
             using var session = _testFactory.DocumentStore.OpenSession();

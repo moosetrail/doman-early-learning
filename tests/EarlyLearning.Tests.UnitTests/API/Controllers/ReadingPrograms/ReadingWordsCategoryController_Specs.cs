@@ -41,7 +41,7 @@ namespace EarlyLearning.Tests.UnitTests.API.Controllers.ReadingPrograms
         {
             // Given
             var categories = _testFactory.NewWordCategories(5);
-            _readingProgram.Setup(x => x.GetCurrent("program id")).ReturnsAsync(categories);
+            _readingProgram.Setup(x => x.GetCurrent()).ReturnsAsync(categories);
 
             // When
             var result = await SUT.GetCurrent("program id");

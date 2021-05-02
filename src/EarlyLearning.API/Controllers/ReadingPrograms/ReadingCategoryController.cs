@@ -22,7 +22,7 @@ namespace EarlyLearning.API.Controllers.ReadingPrograms
         [Route("current")]
         public async Task<IActionResult> GetCurrent([FromQuery] string programId)
         {
-            var current = await _program.GetCurrent(programId);
+            var current = await _program.GetCurrent();
 
             var vmList = MapToVm(current);
 
@@ -36,7 +36,7 @@ namespace EarlyLearning.API.Controllers.ReadingPrograms
         public async Task<IActionResult> GetPlanned([FromQuery] string programId, [FromQuery] int limit = 10,
             [FromQuery] int offset = 0)
         {
-            var current = await _program.GetPlanned(programId, limit, offset);
+            var current = await _program.GetPlanned(limit, offset);
 
             var vmList = MapToVm(current);
 
@@ -48,7 +48,7 @@ namespace EarlyLearning.API.Controllers.ReadingPrograms
         public async Task<IActionResult> GetRetired([FromQuery] string programId, [FromQuery] int limit = 10,
             [FromQuery] int offset = 0)
         {
-            var current = await _program.GetRetired(programId, limit, offset);
+            var current = await _program.GetRetired(limit, offset);
 
             var vmList = MapToVm(current);
 
@@ -60,7 +60,7 @@ namespace EarlyLearning.API.Controllers.ReadingPrograms
         public async Task<IActionResult> Add([FromBody] ReadingCategoryToAddVM unitToAdd, [FromQuery] string programId)
         {
             var toAdd = FromVmToUnitToAdd(unitToAdd);
-            await _program.Add(toAdd, programId);
+            await _program.Add(toAdd);
             return Ok();
         }
 
@@ -91,7 +91,7 @@ namespace EarlyLearning.API.Controllers.ReadingPrograms
         public async Task<IActionResult> MovePlanned([FromQuery] string unitId, [FromQuery] string programId,
             [FromQuery] int toSpot)
         {
-            await _program.MovePlanned(unitId, programId, toSpot);
+            await _program.MovePlanned(unitId, toSpot);
             return Ok();
         }
     }

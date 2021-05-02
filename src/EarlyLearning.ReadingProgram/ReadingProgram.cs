@@ -7,16 +7,18 @@ namespace EarlyLearning.ReadingPrograms
 {
     public interface ReadingProgram<T> where T: ReadingUnit
     {
-        Task<IEnumerable<T>> GetCurrent(string programId);
+        public string ProgramId { get; }
 
-        Task<IEnumerable<T>> GetPlanned(string programId, int limit, int offset);
+        Task<IEnumerable<T>> GetCurrent();
 
-        Task<IEnumerable<T>> GetRetired(string programId, int limit, int offset);
+        Task<IEnumerable<T>> GetPlanned(int limit, int offset);
 
-        Task Add(T toAdd, string programId);
+        Task<IEnumerable<T>> GetRetired(int limit, int offset);
+
+        Task Add(T toAdd);
 
         Task ChangeStatus(string unitId, ActivityStatus newStatus);
 
-        Task MovePlanned(string unitId, string programId, int toSpot);
+        Task MovePlanned(string unitId, int toSpot);
     }
 }
