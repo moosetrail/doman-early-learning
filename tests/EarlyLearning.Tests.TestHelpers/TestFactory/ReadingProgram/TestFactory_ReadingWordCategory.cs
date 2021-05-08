@@ -11,12 +11,15 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
 {
     public partial class TestFactory
     {
-        public ReadingCategory<ReadingWord> NewWordCategory(ActivityStatus status = null)
+        public ReadingCategory<ReadingWord> NewWordCategory(ActivityStatus status = null, string categoryName = null, string categoryId = null, params string[]onTheCards)
         {
-            var cards = GenerateRandomWordCards();
+            var cards = onTheCards == null ? GenerateRandomWordCards() : ReadingCards(onTheCards);
+
             status ??= new CurrentlyActive();
 
-            return new ReadingCategory<ReadingWord>("Category " + random.Next(), cards, status);
+            categoryName ??= "Category " + random.Next();
+
+            return new ReadingCategory<ReadingWord>(categoryName, cards, status);
         }
 
         private IEnumerable<ReadingWord> GenerateRandomWordCards()
@@ -29,6 +32,11 @@ namespace EarlyLearning.Tests.TestHelpers.TestFactory
             }
 
             return cards;
+        }
+
+        private IEnumerable<ReadingWord> ReadingCards(string[] textOnCards)
+        {
+            return textOnCards.Select(word => new ReadingWord(word)).ToList();
         }
 
         public IEnumerable<ReadingCategory<ReadingWord>> NewWordCategories(int nbr = 5)

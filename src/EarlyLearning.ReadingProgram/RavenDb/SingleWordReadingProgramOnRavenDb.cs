@@ -52,7 +52,7 @@ namespace EarlyLearning.ReadingPrograms.RavenDb
             return retiredCategories;
         }
 
-        public async Task Add(ReadingCategory<ReadingWord> toAdd)
+        public async Task<ReadingCategory<ReadingWord>> Add(ReadingCategory<ReadingWord> toAdd)
         {
             var dto = toAdd.ToDTO(ProgramId);
 
@@ -61,6 +61,8 @@ namespace EarlyLearning.ReadingPrograms.RavenDb
 
             await _session.StoreAsync(dto);
             await _session.SaveChangesAsync();
+
+            return dto.ToCategory();
         }
 
         public async Task ChangeStatus(string unitId, ActivityStatus newStatus)

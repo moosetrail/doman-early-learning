@@ -49,7 +49,7 @@ namespace EarlyLearning.Tests.TestHelpers.Asserts
         public static void AreEqual<E, A>(IEnumerable<E> expected, IEnumerable<A> actual,
             Func<E, A, bool> areEqual)
         {
-            NUnit.Framework.Assert.AreEqual(expected.Count(), actual.Count());
+            Assert.AreEqual(expected.Count(), actual.Count());
             for (var i = 0; i < expected.Count(); i++)
             {
                 var expectedElement = expected.ElementAt(i);

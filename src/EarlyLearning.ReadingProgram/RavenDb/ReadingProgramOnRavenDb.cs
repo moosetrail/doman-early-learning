@@ -7,7 +7,7 @@ using Serilog;
 
 namespace EarlyLearning.ReadingPrograms.RavenDb
 {
-    public abstract class ReadingProgramOnRavenDb<T>: ReadingProgram<T> where T : ReadingUnit
+    public abstract class ReadingProgramOnRavenDb<T>
     {
         private readonly ILogger _logger;
         private readonly IAsyncDocumentSession _session;

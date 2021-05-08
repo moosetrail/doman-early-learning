@@ -15,7 +15,7 @@ namespace EarlyLearning.ReadingPrograms
 
         Task<IEnumerable<T>> GetRetired(int limit, int offset);
 
-        Task Add(T toAdd);
+        Task<T> Add(T toAdd);
 
         Task ChangeStatus(string unitId, ActivityStatus newStatus);
 

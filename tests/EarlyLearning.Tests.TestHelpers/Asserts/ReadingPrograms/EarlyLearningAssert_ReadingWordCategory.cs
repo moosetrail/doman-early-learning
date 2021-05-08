@@ -33,8 +33,14 @@ namespace EarlyLearning.Tests.TestHelpers.Asserts
         public static void AreEqual(IEnumerable<ReadingCategory<ReadingWord>> expected, IActionResult actualResult)
         {
             HttpResultIsOk(actualResult);
-            var actual = DataInResult<IEnumerable<ReadingCategoryVM>>(actualResult);
+            var actual = DataInResult<IEnumerable<object>>(actualResult);
             AreEqual(expected, actual, AreEqual);
+        }
+
+        public static bool AreEqual(ReadingCategory<ReadingWord> expected, object actual)
+        {
+            var actualCategory = actual as ReadingCategoryVM;
+            return AreEqual(expected, actualCategory);
         }
     }
 }
