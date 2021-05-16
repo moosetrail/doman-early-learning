@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using EarlyLearning.Core.Exceptions;
 using EarlyLearning.ReadingPrograms;
 using EarlyLearning.ReadingPrograms.DataModels.ReadingSingleUnits;
 using EarlyLearning.ReadingPrograms.DataModels.ReadingUnits;
+using EarlyLearning.ReadingPrograms.RavenDb.DataTransferObjects;
 using EarlyLearning.ReadingPrograms.RavenDb.Indexes;
 using EarlyLearning.Tests.TestHelpers.Asserts;
 using EarlyLearning.Tests.TestHelpers.TestFactory;
 using NUnit.Framework;
+using Raven.Client.Documents.Linq;
 
 namespace EarlyLearning.Tests.UnitTests.ReadingPrograms
 {
@@ -111,6 +116,64 @@ namespace EarlyLearning.Tests.UnitTests.ReadingPrograms
 
             // Then 
             Assert.ThrowsAsync<NotSupportedException>(async () => await SUT.GetReadingProgram<HomemadeBook>(program.Id));
+        }
+
+        [Test]
+        public async Task CreateNewProgram_should_add_program_to_database()
+        {
+            // Given
+            var children = SetupChildren();
+
+            // When
+            await SUT.CreateNewProgram(children, userId);
+
+            // Then 
+            var inDb = GetReadingProgramForChildren(children);
+            Assert.NotNull(inDb);
+        }
+
+        private IEnumerable<string> SetupChildren()
+        {
+            var childList = new []
+            {
+                _testFactory.AddNewChild("Child 1", "A", userId).Id,
+                _testFactory.AddNewChild("Child 2", "B", userId).Id
+            };
+            return childList;
+        }
+
+        private ReadingProgramInfoDTO GetReadingProgramForChildren(IEnumerable<string> children)
+        {
+            using var session = _testFactory.DocumentStore.OpenSession();
+            var inDb = session.Query<ReadingProgramInfoDTO>().SingleOrDefault(x =>
+                x.ChildrenIds.ContainsAll(children));
+            return inDb;
+        }
+
+        [Test]
+        public async Task CreateNewProgram_should_return_program_info_for_new_program()
+        {
+            // Given
+            var children = SetupChildren();
+
+            // When
+            var result = await SUT.CreateNewProgram(children, userId);
+
+            // Then 
+            var inDb = GetReadingProgramForChildren(children);
+            EarlyLearningAssert.AreEqual(inDb, result);
+        }
+
+        [Test]
+        public void CreateNewProgram_should_throw_if_user_isnt_authorized_to_handle_any_of_the_children()
+        {
+            var children = SetupChildren();
+            var additionalChild = _testFactory.AddNewChild("Child 3", "C", "other adult");
+            children = new List<string>(children){additionalChild.Id};
+
+            // Then 
+            var ex = Assert.ThrowsAsync<UserNotAuthorizedException>(async () =>
+                await SUT.CreateNewProgram(children, userId));
         }
     }
 }

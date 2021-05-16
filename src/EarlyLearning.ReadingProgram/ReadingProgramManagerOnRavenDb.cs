@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EarlyLearning.Core.DTOForRavenDb;
+using EarlyLearning.Core.Exceptions;
 using EarlyLearning.ReadingPrograms.DataModels;
 using EarlyLearning.ReadingPrograms.DataModels.ReadingSingleUnits;
 using EarlyLearning.ReadingPrograms.DataModels.ReadingUnits;
@@ -26,6 +27,49 @@ namespace EarlyLearning.ReadingPrograms
         {
             _session = session;
             _logger = logger.ForContext<ReadingProgramManagerOnRavenDb>();
+        }
+
+        public async Task<ReadingProgramInfo> CreateNewProgram(IEnumerable<string> forChildren, string userId)
+        {
+            if(await UserNotAllwedToAdminAllChildren(forChildren, userId))
+                HandleUnauthorizedUser();
+
+            var programDto = await CreateNewProgram(forChildren);
+
+            var program = programDto.ToReadingProgramInfo();
+            return program;
+        }
+
+        private void HandleUnauthorizedUser()
+        {
+            _logger.Warning("User not authorized to admin one or more children");
+            throw new UserNotAuthorizedException();
+        }
+
+        private async Task<bool> UserNotAllwedToAdminAllChildren(IEnumerable<string> forChildren, string userId)
+        {
+            var childrenOnProgram = await _session.LoadAsync<ChildDTO>(forChildren);
+            var userCanAccess = childrenOnProgram.All(x => x.Value.Adults.Contains(userId));
+            return !userCanAccess;
+        }
+
+        private async Task<ReadingProgramInfoDTO> CreateNewProgram(IEnumerable<string> forChildren)
+        {
+            var programDto = new ReadingProgramInfoDTO
+            {
+                ChildrenIds = forChildren
+            };
+            await _session.StoreAsync(programDto);
+            _logger.ForContext("Children", forChildren).Information("Added new reading program to session");
+
+            await SaveChanges();
+            return programDto;
+        }
+
+        private async Task SaveChanges()
+        {
+            await _session.SaveChangesAsync();
+            _logger.Information("Session saved");
         }
 
         public async Task<IEnumerable<ReadingProgramInfo>> GetAllProgramsForUser(string userId)

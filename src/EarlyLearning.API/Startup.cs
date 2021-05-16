@@ -44,12 +44,9 @@ namespace EarlyLearning.API
                 app.UseDeveloperExceptionPage();
             }
 
-           
-
             // app.UseHttpsRedirection();
             app.UseRouting();
             SetupCors(app);
-
 
             // app.UseAuthorization();
 

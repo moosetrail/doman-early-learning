@@ -2,6 +2,7 @@
 using System.Net.Http;
 using EarlyLearning.API.Models.ReadingPrograms;
 using EarlyLearning.ReadingPrograms.DataModels;
+using EarlyLearning.ReadingPrograms.RavenDb.DataTransferObjects;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 
@@ -43,6 +44,14 @@ namespace EarlyLearning.Tests.TestHelpers.Asserts
 
             var actualVms = DataInResult<IEnumerable<ReadingProgramVM>>(actualResponse);
             AreEqual(expectedPrograms, actualVms, AreEqual);
+        }
+
+        public static bool AreEqual(ReadingProgramInfoDTO expected, ReadingProgramInfo actual)
+        {
+            Assert.NotNull(actual);
+            Assert.AreEqual(expected.Id, actual.Id);
+            CollectionAssert.AreEquivalent(expected.ChildrenIds, actual.Children);
+            return true;
         }
     }
 }

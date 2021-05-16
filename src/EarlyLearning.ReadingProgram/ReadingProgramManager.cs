@@ -6,6 +6,8 @@ namespace EarlyLearning.ReadingPrograms
 {
     public interface ReadingProgramManager
     {
+        Task<ReadingProgramInfo> CreateNewProgram(IEnumerable<string> forChildren, string userId);
+
         Task<IEnumerable<ReadingProgramInfo>> GetAllProgramsForUser(string userId);
 
         Task<bool> UserCanAccessProgram(string programId, string userId);

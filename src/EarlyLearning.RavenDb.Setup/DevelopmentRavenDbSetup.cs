@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using EarlyLearning.Core.RavenDb;
 using EarlyLearning.RavenDb.Setup.Populators;
+using EarlyLearning.ReadingPrograms;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Operations;
 using Raven.Client.Exceptions;
@@ -22,6 +23,8 @@ namespace EarlyLearning.RavenDb.Setup
             _indexManager = indexManager;
             _logger = logger.ForContext<DevelopmentRavenDbSetup>();
         }
+
+        private const string FakeUserId = "abcd-abcd-abcd-abcd";
 
         public async Task EnsureDatabaseExistsAsync(IDocumentStore store, string database = null, bool createDatabaseIfNotExists = true)
         {
@@ -52,7 +55,11 @@ namespace EarlyLearning.RavenDb.Setup
         public async Task Populate(IDocumentStore store)
         {
             var childManager = new ChildManagerOnRavenDb(store.OpenAsyncSession(), _logger);
-            var children = await new ChildPopulator(childManager).Run();
+            var readingProgramManager = new ReadingProgramManagerOnRavenDb(store.OpenAsyncSession(), _logger);
+
+            var childPopulator = new ChildPopulator(childManager, FakeUserId);
+            await childPopulator.Run();
+            await new ReadingProgramPopulator(readingProgramManager, childPopulator, FakeUserId).Run();
         }
 
         public async Task<IDocumentStore> Create(string url)
