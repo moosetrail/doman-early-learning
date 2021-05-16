@@ -108,5 +108,13 @@ namespace EarlyLearning.ReadingPrograms
 
             return null;
         }
+
+        /// <remarks>Untested</remarks>
+        public Task<bool> ReadingProgramExistsFor(IEnumerable<string> children)
+        {
+            var exists = _session.Query<ReadingProgramInfoDTO>()
+                .AnyAsync(x => x.ChildrenIds.ContainsAll(children));
+            return exists;
+        }
     }
 }

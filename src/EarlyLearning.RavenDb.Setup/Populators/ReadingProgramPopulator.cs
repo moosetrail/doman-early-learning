@@ -18,11 +18,17 @@ namespace EarlyLearning.RavenDb.Setup.Populators
 
         public async Task Run()
         {
-            await _manager.CreateNewProgram(
-                new[] {_childPopulator.Zacharias.Id, _childPopulator.Jacqueline.Id, _childPopulator.Dominique.Id},
+            var program1Children = new[]
+                {_childPopulator.Zacharias.Id, _childPopulator.Jacqueline.Id, _childPopulator.Dominique.Id};
+
+            if(!await _manager.ReadingProgramExistsFor(program1Children))
+                await _manager.CreateNewProgram(program1Children,
                 _fakeUserId);
 
-            await _manager.CreateNewProgram(new[] {_childPopulator.Phoenix.Id}, _fakeUserId);
+            var phoenixProgram = new[] {_childPopulator.Phoenix.Id};
+
+            if(!await _manager.ReadingProgramExistsFor(phoenixProgram))
+                await _manager.CreateNewProgram(phoenixProgram, _fakeUserId);
         }
     }
 }

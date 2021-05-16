@@ -13,5 +13,7 @@ namespace EarlyLearning.ReadingPrograms
         Task<bool> UserCanAccessProgram(string programId, string userId);
 
         Task<ReadingProgram<T>> GetReadingProgram<T>(string programId) where T : ReadingUnit;
+
+        Task<bool> ReadingProgramExistsFor(IEnumerable<string> children);
     }
 }

@@ -31,7 +31,10 @@ namespace EarlyLearning.RavenDb.Setup.Populators
         {
             foreach (var name in names)
             {
-                _children.Add(await _manager.AddChildForUser(name, lastName, adultId));
+                if(! await _manager.ChildExists(name, lastName, adultId))
+                    _children.Add(await _manager.AddChildForUser(name, lastName, adultId));
+                else 
+                    _children.Add(await _manager.GetChild(name, lastName, adultId));
             }
         }
 

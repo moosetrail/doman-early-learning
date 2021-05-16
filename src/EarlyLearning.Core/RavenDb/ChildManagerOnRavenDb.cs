@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EarlyLearning.Core.DTOForRavenDb;
 using EarlyLearning.Core.DTOForRavenDb.Mappers;
 using EarlyLearning.Core.People;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Linq;
 using Raven.Client.Documents.Session;
 using Serilog;
 
@@ -77,6 +80,29 @@ namespace EarlyLearning.Core.RavenDb
             var foundChildren = childrenDtos.Select(x => x.ToChild());
 
             return foundChildren;
+        }
+
+        /// <remarks>Untested</remarks>
+        public async Task<bool> ChildExists(string firstName, string lastName, string userId)
+        {
+            var childExists = await _session.Query<ChildDTO>().AnyAsync(SelectChild(firstName, lastName, userId));
+            return childExists;
+        }
+
+        private static Expression<Func<ChildDTO, bool>> SelectChild(string firstName, string lastName, string userId)
+        {
+            return x =>
+                x.FirstName == firstName && x.LastName == lastName && x.Adults.Any(u => u == userId);
+        }
+
+        /// <remarks>Untested</remarks>
+        public async Task<Child> GetChild(string firstName, string lastName, string userId)
+        {
+            var dto = await _session.Query<ChildDTO>()
+                .SingleOrDefaultAsync(SelectChild(firstName, lastName, userId));
+
+            var child = dto?.ToChild();
+            return child;
         }
     }
 }
