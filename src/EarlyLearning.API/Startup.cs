@@ -28,9 +28,11 @@ namespace EarlyLearning.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllers();
             EarlyLearningAPI.BuildDependencies(services);
             services.AddTransient<CurrentUser, CurrentFakeUser>();
+            services.AddSingleton(_logger);
             Task.WaitAll(ConfigureRavenDb(services));
         }
 
@@ -42,9 +44,12 @@ namespace EarlyLearning.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+           
 
+            // app.UseHttpsRedirection();
             app.UseRouting();
+            SetupCors(app);
+
 
             // app.UseAuthorization();
 
@@ -52,6 +57,18 @@ namespace EarlyLearning.API
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void SetupCors(IApplicationBuilder app)
+        {
+            var corsOrigins = Configuration["CORS"];
+            app.UseCors(options =>
+            {
+                options.WithOrigins(
+                        corsOrigins)
+                    .AllowAnyHeader().AllowAnyMethod();
+            });
+            Log.ForContext("Origins", corsOrigins).Information("Setting up CORS");
         }
     }
 }

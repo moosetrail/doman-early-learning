@@ -15,7 +15,7 @@ services:
      - Serilog__WriteTo__1__Args__serverUrl=http://seq:5341
      - RavenDbUrl=http://ravendb:8080
      - APPINSIGHTS_INSTRUMENTATIONKEY=abcdef
-     - CORS=https://localhost:4220
+     - CORS=http://localhost:4200
      - LoggingLevel=Debug
 
   ravendb:
